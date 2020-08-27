@@ -13,7 +13,7 @@ const Header = styled.div`
   justify-content: space-between;
 `;
 
-const Heading = styled.p`
+const Heading = styled.h2`
   font-family: Comfortaa;
   font-size: 2rem;
   margin: 0.25rem 0;

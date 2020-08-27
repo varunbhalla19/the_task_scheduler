@@ -6,6 +6,7 @@ const Showcase = styled.div`
   background-color: #eee;
   display: flex;
   flex-direction: column;
+  // padding : 2rem;
 `;
 
 export default ({ children }) => <Showcase>{children}</Showcase>;
