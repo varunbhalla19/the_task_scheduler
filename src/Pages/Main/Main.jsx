@@ -12,6 +12,7 @@ const Main = styled.div`
   // background: #789789;
   & > div {
     height: 100%;
+    box-shadow: 0px 3px 10px 0px rgba(0,0,0,0.5); 
     background: snow;
     border-radius: 2rem;
   }

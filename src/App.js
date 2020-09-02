@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import "./App.css";
 
 import Header from "./Components/Header/Header";
@@ -8,17 +8,16 @@ import AddTask from "./Components/AddTask/AddTask";
 import Main from "./Pages/Main/Main";
 
 function App() {
-  const [opened, open] = useState(false);
-
   return (
     <div className="App">
       <Sidebar />
       <Showcase>
-        <Header open={open} opened={opened} />
+        {console.log('App render')}
+        <Header />
         <Main />
       </Showcase>
 
-      <AddTask open={open} opened={opened} />
+      <AddTask />
     </div>
   );
 }

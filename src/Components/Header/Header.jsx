@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 
 import styled from "styled-components";
 
 import { ReactComponent as Notifications } from "../../Assets/Svgs/notifications-24px.svg";
 import { ReactComponent as AddTask } from "../../Assets/Svgs/add_circle-24px.svg";
+
+import { ShowHideContext } from "../../Context/AddTaskScreen";
 
 // background: darkslateblue;
 const Header = styled.div`
@@ -49,7 +51,9 @@ const HeadPicture = styled.li`
     }
 `;
 
-export default ({ open, opened }) => {
+export default () => {
+  const { hide } = useContext(ShowHideContext);
+
   return (
     <Header>
       <div className="head-title">
@@ -60,7 +64,7 @@ export default ({ open, opened }) => {
           <Notifications />
         </HeadOption>
         <HeadOption>
-          <AddTask onClick={() => open(!opened)} />
+          <AddTask onClick={hide} />
         </HeadOption>
         <HeadPicture>
           <img src="https://robohash.org/vbss?set=set5" alt="dp"></img>

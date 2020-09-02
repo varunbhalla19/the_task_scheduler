@@ -5,11 +5,17 @@ import App from "./App";
 
 import { BrowserRouter as Router } from "react-router-dom";
 
+import TaskProvider from "./Context/TaskProvider";
+
+import ShowHideContext from "./Context/AddTaskScreen";
+
 ReactDOM.render(
-  <React.StrictMode>
-    <Router>
-      <App />
-    </Router>
-  </React.StrictMode>,
+  <Router>
+    <TaskProvider>
+      <ShowHideContext>
+        <App />
+      </ShowHideContext>
+    </TaskProvider>
+  </Router>,
   document.getElementById("root")
 );
