@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 const TaskContainer = styled.div`
     padding : 1rem 2rem ;
-    background : whitesmoke ;
+    background : #89a ;
     margin : 0.5rem 0;
     text-align : left ;
     cursor : pointer ;

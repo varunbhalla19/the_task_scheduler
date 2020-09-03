@@ -4,15 +4,17 @@ import { Route } from "react-router-dom";
 
 import Home from "../Home/Home";
 
+import Schedule from "../Schedule/Schedule";
+
 import styled from "styled-components";
 
 const Main = styled.div`
   flex-grow: 1;
-  padding: 2rem;
+  padding: 1rem 3rem 1rem 1rem ;
   // background: #789789;
   & > div {
     height: 100%;
-    box-shadow: 0px 3px 10px 0px rgba(0,0,0,0.5); 
+    box-shadow: 0px 3px 10px 0px rgba(0, 0, 0, 0.5);
     background: snow;
     border-radius: 2rem;
   }
@@ -22,7 +24,6 @@ const Chat = () => <h2>Chat</h2>;
 
 const Tasks = () => <h2>Tasks</h2>;
 const Groups = () => <h2>Groups</h2>;
-const Schedule = () => <h2>Schedule</h2>;
 const Settings = () => <h2>Settings</h2>;
 
 const MainPage = () => (
