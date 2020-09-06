@@ -3,9 +3,11 @@ import React, { useContext } from "react";
 import styled from "styled-components";
 
 import { ReactComponent as Notifications } from "../../Assets/Svgs/notifications-24px.svg";
-import { ReactComponent as AddTask } from "../../Assets/Svgs/add_circle-24px.svg";
+import { ReactComponent as AddTaskButton } from "../../Assets/Svgs/add_circle-24px.svg";
 
 import { ShowHideContext } from "../../Context/AddTaskScreen";
+
+import AddTask from "../AddTask/AddTask";
 
 // background: darkslateblue;
 const Header = styled.div`
@@ -52,7 +54,9 @@ const HeadPicture = styled.li`
 `;
 
 export default () => {
-  const { hide } = useContext(ShowHideContext);
+  // const { setComponent } = useContext(ShowHideContext);
+
+  console.log("Head Rendered");
 
   return (
     <Header>
@@ -64,7 +68,7 @@ export default () => {
           <Notifications />
         </HeadOption>
         <HeadOption>
-          <AddTask onClick={hide} />
+          <TheAddButton />
         </HeadOption>
         <HeadPicture>
           <img src="https://robohash.org/vbss?set=set5" alt="dp"></img>
@@ -72,4 +76,9 @@ export default () => {
       </HeadOptions>
     </Header>
   );
+};
+
+const TheAddButton = () => {
+  const { setComponent } = useContext(ShowHideContext);
+  return <AddTaskButton onClick={() => setComponent(<AddTask />)} />;
 };

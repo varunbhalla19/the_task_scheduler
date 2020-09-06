@@ -4,20 +4,22 @@ import "./App.css";
 import Header from "./Components/Header/Header";
 import Sidebar from "./Components/Sidebar/Sidebar";
 import Showcase from "./Components/Showcase/Showcase";
-import AddTask from "./Components/AddTask/AddTask";
+// import AddTask from "./Components/AddTask/AddTask";
+// import TaskModal from "./Components/TaskModal/TaskModal";
 import Main from "./Pages/Main/Main";
+import Modal from "./Components/Modal/Modal";
 
 function App() {
   return (
     <div className="App">
       <Sidebar />
       <Showcase>
-        {console.log('App render')}
+        {console.log("App render")}
         <Header />
         <Main />
       </Showcase>
 
-      <AddTask />
+      <Modal />
     </div>
   );
 }

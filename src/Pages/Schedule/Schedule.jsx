@@ -18,6 +18,7 @@ export const WeekContext = createContext({
 export default () => {
   const [wday, setWday] = useState(new Date().toDateString());
   console.log("date selected => ", wday);
+  console.log('Schedule Component');
   return (
     <div className="sch">
       <Title> Schedule </Title>

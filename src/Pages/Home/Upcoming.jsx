@@ -17,6 +17,8 @@ export default () => {
     t1.date < t2.date ? -1 : 1
   );
 
+  console.log("Upcoming Component");
+
   const finalTaskList = sortedTaskArray.reduce(
     (ar, taskObj) => [...ar, ...taskObj.taskList],
     []

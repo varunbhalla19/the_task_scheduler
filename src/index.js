@@ -9,12 +9,16 @@ import TaskProvider from "./Context/TaskProvider";
 
 import ShowHideContext from "./Context/AddTaskScreen";
 
+import ProjectProvider from "./Context/ProjectProvider";
+
 ReactDOM.render(
   <Router>
     <TaskProvider>
-      <ShowHideContext>
-        <App />
-      </ShowHideContext>
+      <ProjectProvider>
+        <ShowHideContext>
+          <App />
+        </ShowHideContext>
+      </ProjectProvider>
     </TaskProvider>
   </Router>,
   document.getElementById("root")

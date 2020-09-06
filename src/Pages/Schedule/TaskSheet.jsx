@@ -10,9 +10,11 @@ export default () => {
 
   const taskList = tasks[weekDay] ? tasks[weekDay].taskList : [];
 
+  console.log("TaskSheet Component");
+  
   return (
     <>
-      <div> TaskList </div>
+      <h4> {weekDay} </h4>
       <div>
         {taskList.map((task) => (
           <Task task={task.task} key={task.id} dateString={weekDay} />

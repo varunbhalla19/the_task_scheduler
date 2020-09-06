@@ -11,9 +11,11 @@ import { Container, Title, TaskContainer } from "./styles";
 export default () => {
   const { todayTask } = useContext(TaskContext);
 
+  console.log("Today Component");
+
   return (
     <Container>
-      <Title>Today {console.log("Today Component")} </Title>
+      <Title>Today </Title>
       <TaskContainer>
         {todayTask().map((task) => (
           <Task key={task.id} {...task} />

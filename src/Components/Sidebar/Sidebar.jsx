@@ -73,17 +73,17 @@ export default () => (
           <TextSvg />
         </Option>
       </Nav>
-      <Nav to="schedule">
+      <Nav to="/schedule">
         <Option>
           <CalendarSvg />
         </Option>
       </Nav>
-      <Nav to="groups">
+      <Nav to="/groups">
         <Option>
           <PeopleSvg />
         </Option>
       </Nav>
-      <Nav to="settings">
+      <Nav to="/settings">
         <Option>
           <SettingsSvg />
         </Option>
