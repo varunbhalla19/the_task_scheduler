@@ -56,9 +56,9 @@ Date.setDateNum = (date, num) => {
 
 Date.getFirstWeekSunday = () => {
   let d = new Date();
-  let day = d.getDay();
-  let res = day === 0 ? 0 : 0 - day;
-  d.setDate(d.getDate() - res);
+  let day = d.getDay();    // 1 Monday -> 7
+  // let res = day === 0 ? 0 : 0 - day;
+  d.setDate(d.getDate() - day);
   return d;
 };
 

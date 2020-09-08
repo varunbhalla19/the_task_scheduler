@@ -1,20 +1,12 @@
 import React, { useContext } from "react";
 
-import {
-  Route,
-  Switch,
-  useRouteMatch,
-  useParams,
-  Redirect,
-} from "react-router-dom";
+import { Route, Switch, useRouteMatch } from "react-router-dom";
 
 import styled from "styled-components";
 
 import { ShowHideContext } from "../../Context/AddTaskScreen";
 
 import AddProject from "./AddProject";
-
-import { ProjectContext } from "../../Context/ProjectProvider";
 
 import ProjectsShow from "./ProjectsShow";
 
