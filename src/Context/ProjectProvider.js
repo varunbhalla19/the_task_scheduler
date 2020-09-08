@@ -7,6 +7,7 @@ export const ProjectContext = createContext({
   addSection: () => {},
   sectionTasks: {},
   addSectionTasks: () => {},
+  setTaskArrayDD: () => {},
 });
 
 Date.getToday = () => new Date().toDateString();
@@ -99,8 +100,8 @@ const ProjectProvider = ({ children }) => {
     ],
   });
 
-  console.log("sections are ", sections);
-  console.log("tasks are ", tasks);
+  // console.log("sections are ", sections);
+  // console.log("tasks are ", tasks);
 
   return (
     <ProjectContext.Provider
@@ -117,9 +118,15 @@ const ProjectProvider = ({ children }) => {
         addSectionTasks: (task, id) => {
           setTasks(addSectionMethod(task, id, tasks));
         },
+        setTaskArrayDD: (id, ar) =>
+          setTasks((tasks) => ({
+            ...tasks,
+            [id]: ar,
+          })),
       }}
     >
-      {children} {console.log("All Projects ", projects)}
+      {children} 
+      {/* {console.log("All Projects ", projects)} */}
     </ProjectContext.Provider>
   );
 };

@@ -44,7 +44,8 @@ const TaskProvider = ({ children }) => {
           tasks[Date.getToday()] ? tasks[Date.getToday()]["taskList"] : [],
       }}
     >
-      {children} {console.log("All Tasks ", tasks)}
+      {children} 
+      {/* {console.log("All Tasks ", tasks)} */}
     </TaskContext.Provider>
   );
 };

@@ -56,7 +56,7 @@ const HeadPicture = styled.li`
 export default () => {
   // const { setComponent } = useContext(ShowHideContext);
 
-  console.log("Head Rendered");
+  // console.log("Head Rendered");
 
   return (
     <Header>

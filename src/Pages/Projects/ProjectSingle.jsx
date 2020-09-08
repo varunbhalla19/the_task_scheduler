@@ -1,4 +1,6 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
+
+import { ReactSortable } from "react-sortablejs";
 
 import { useParams, Redirect } from "react-router-dom";
 
@@ -117,29 +119,50 @@ const AddSection = ({ projId, secTask }) => {
   );
 };
 
+// const compareArrays = (ar1,ar2) => {
+//   ar1.forEach(element => {
+
+//   });
+// }
+
 const ProjectSections = ({ section }) => {
-  const { sectionTasks } = useContext(ProjectContext);
+  const { sectionTasks, setTaskArrayDD } = useContext(ProjectContext);
 
   const tasksArray = sectionTasks[section.id] || [];
 
+  console.log('Project Sections');
+
   return (
     <div>
-      <h4> {section.value} </h4>
+      <h4>
+        {section.value} : {tasksArray.length}
+      </h4>
 
       <ul>
-        {tasksArray.map((el) => (
-          <div
-            style={{
-              border: "1px solid black",
-              margin: "0.5rem 0",
-              padding: "1rem",
-              cursor: "pointer",
-            }}
-            key={el.id}
-          >
-            {el.value}
-          </div>
-        ))}
+        <ReactSortable
+          list={tasksArray}
+          setList={(list) => {
+            console.log("setList called ", list, list === tasksArray);
+            setTaskArrayDD( section.id, list )
+          }}
+          animation="200"
+          group="x"
+          ghostClass="drag"
+        >
+          {tasksArray.map((el) => (
+            <div
+              style={{
+                border: "1px solid black",
+                margin: "0.5rem 0",
+                padding: "1rem",
+                cursor: "pointer",
+              }}
+              key={el.id}
+            >
+              {el.value}
+            </div>
+          ))}
+        </ReactSortable>
       </ul>
 
       <TheAddBtn id={section.id} secTask="task" text="Add Task" />

@@ -14,7 +14,7 @@ function App() {
     <div className="App">
       <Sidebar />
       <Showcase>
-        {console.log("App render")}
+        {/* {console.log("App render")} */}
         <Header />
         <Main />
       </Showcase>
@@ -26,6 +26,8 @@ function App() {
 
 export default App;
 
+
+  //  Sortable => https://codesandbox.io/s/practical-lehmann-lezmu?file=/src/App.js
 /* <Home /> */
 
 // return (
