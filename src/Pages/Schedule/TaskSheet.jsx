@@ -1,25 +1,24 @@
-import React, { useContext } from "react";
+import React from "react";
 
-import { TaskContext } from "../../Context/TaskProvider";
-import { WeekContext } from "./Schedule";
 import Task from "../../Components/Task/Task";
-export default () => {
-  const { tasks } = useContext(TaskContext);
+import { connect } from "react-redux";
 
-  const { weekDay } = useContext(WeekContext);
-
-  const taskList = tasks[weekDay] ? tasks[weekDay].taskList : [];
-
+const TaskSheet = ({ weekDay, taskList }) => {
   console.log("TaskSheet Component");
-  
+
   return (
     <>
       <h4> {weekDay} </h4>
       <div>
         {taskList.map((task) => (
-          <Task task={task.task} key={task.id} dateString={weekDay} />
+          <Task task={task} key={task.id} dateString={weekDay} />
         ))}
       </div>
     </>
   );
 };
+
+export default connect(({ weekDay, tasks }) => ({
+  weekDay,
+  taskList: tasks[weekDay] ? tasks[weekDay].taskList : [],
+}))(TaskSheet);

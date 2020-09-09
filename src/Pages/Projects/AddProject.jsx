@@ -1,13 +1,10 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 
 import styled from "styled-components";
 
-// import { ShowHideContext } from "../../Context/AddTaskScreen";
-//   const { setComponent } = useContext(ShowHideContext);
-
 import Input from "../../Components/Input/Input";
 
-import { ProjectContext } from "../../Context/ProjectProvider";
+import { connect } from "react-redux";
 
 const Container = styled.div`
   height: 100%;
@@ -16,8 +13,7 @@ const Container = styled.div`
   padding: 1rem;
 `;
 
-export default () => {
-  const { addProject } = useContext(ProjectContext);
+const ADDProject = ({ addProject, addTask }) => {
   const [values, setValues] = useState({
     projectName: "",
     datefrom: null,
@@ -36,9 +32,25 @@ export default () => {
 
   const dataSubmitted = (ev) => {
     ev.preventDefault();
-    console.log("Recieved Data ", values);
     values["id"] = String(Date.now());
+    console.log(values);
     addProject(values);
+    addTask({
+      date: values.datefrom,
+      task: `${values.projectName} : Start`,
+      link: values.id,
+      dateString: values.datefrom.toDateString(),
+      isProject: true,
+      id: String(Date.now() + encodeURI(`${values.projectName} : Start`)),
+    });
+    addTask({
+      date: values.dateto,
+      task: `${values.projectName} : End`,
+      link: values.id,
+      id: String(Date.now() + encodeURI(`${values.projectName} : End`)),
+      dateString: values.dateto.toDateString(),
+      isProject: true,
+    });
   };
 
   return (
@@ -58,3 +70,8 @@ export default () => {
     </Container>
   );
 };
+
+export default connect(null, (dispatch) => ({
+  addProject: (project) => dispatch({ type: "ADD_PROJECT", payload: project }),
+  addTask: (task) => dispatch({ type: "ADD_TASK", payload: task }),
+}))(ADDProject);

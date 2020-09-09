@@ -1,8 +1,8 @@
-import React, { useContext } from "react";
+import React from "react";
 
 import styled from "styled-components";
 
-import { WeekContext } from "./Schedule";
+import { connect } from "react-redux";
 
 const WeekName = styled.div`
   margin-bottom: 0.5rem;
@@ -17,13 +17,14 @@ const Day = styled.div`
   }
 
   border: 1px solid ${({ isToday }) => (isToday ? "indianred" : "transparent")};
+  color: ${({ hasTasks }) => (hasTasks ? "red" : "black")};
 `;
 
-export default ({ day }) => {
-  const { setWeekDay } = useContext(WeekContext);
+const WeekDay = ({ day, hasTasks, setWeekDay }) => {
   return (
     <Day
       isToday={day.isToday}
+      hasTasks={hasTasks}
       onClick={() => setWeekDay(day.toDateString())}
     >
       <WeekName>
@@ -33,3 +34,12 @@ export default ({ day }) => {
     </Day>
   );
 };
+
+export default connect(
+  ({ tasks }, { day }) => ({
+    hasTasks: tasks[day.toDateString()] ? true : false,
+  }),
+  (dispatch) => ({
+    setWeekDay: (dayStr) => dispatch({ type: "SET_WDAY", payload: dayStr }),
+  })
+)(WeekDay);

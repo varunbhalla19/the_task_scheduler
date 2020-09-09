@@ -69,10 +69,6 @@ const StatOnly = styled.div`
 export default () => {
   const match = useRouteMatch();
 
-  // console.log("Match ", match);
-
-  // console.log("Project Comp Rendered");
-
   return (
     <Switch>
       <Route exact path={match.path}>

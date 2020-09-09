@@ -4,8 +4,8 @@ export const ProjectContext = createContext({
   projects: [],
   addProject: () => {},
   sections: {},
-  addSection: () => {},
   sectionTasks: {},
+  addSection: () => {},
   addSectionTasks: () => {},
   setTaskArrayDD: () => {},
 });

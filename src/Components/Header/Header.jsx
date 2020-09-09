@@ -53,10 +53,19 @@ const HeadPicture = styled.li`
     }
 `;
 
-export default () => {
-  // const { setComponent } = useContext(ShowHideContext);
+const AddBut = styled.div`
+  border: 1px solid black;
+  display: flex;
+  align-items: center;
+  padding: 0.25rem 0.4rem 0.25rem 0.6rem ;
+  border-radius: 2rem;
+  cursor: pointer;
+  p {
+    margin: 0 0.5rem 0 0;
+  }
+`;
 
-  // console.log("Head Rendered");
+export default () => {
 
   return (
     <Header>
@@ -80,5 +89,10 @@ export default () => {
 
 const TheAddButton = () => {
   const { setComponent } = useContext(ShowHideContext);
-  return <AddTaskButton onClick={() => setComponent(<AddTask />)} />;
+  return (
+    <AddBut onClick={() => setComponent(<AddTask />)}>
+      <p>Add Task</p>
+      <AddTaskButton />
+    </AddBut>
+  );
 };

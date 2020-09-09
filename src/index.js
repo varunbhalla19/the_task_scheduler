@@ -5,21 +5,19 @@ import App from "./App";
 
 import { BrowserRouter as Router } from "react-router-dom";
 
-import TaskProvider from "./Context/TaskProvider";
-
 import ShowHideContext from "./Context/AddTaskScreen";
 
-import ProjectProvider from "./Context/ProjectProvider";
+import { Provider } from "react-redux";
+
+import store from "./redux/store";
 
 ReactDOM.render(
   <Router>
-    <TaskProvider>
-      <ProjectProvider>
-        <ShowHideContext>
-          <App />
-        </ShowHideContext>
-      </ProjectProvider>
-    </TaskProvider>
+    <Provider store={store}>
+      <ShowHideContext>
+        <App />
+      </ShowHideContext>
+    </Provider>
   </Router>,
   document.getElementById("root")
 );

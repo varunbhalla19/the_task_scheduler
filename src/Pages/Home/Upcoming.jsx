@@ -1,39 +1,30 @@
-import React, { useContext } from "react";
-
-// import styled from "styled-components";
-
-import { TaskContext } from "../../Context/TaskProvider";
+import React from "react";
+import { connect } from "react-redux";
 
 import Task from "../../Components/Task/Task";
 
 import { Container, Title, TaskContainer } from "./styles";
 
-export default () => {
-  const { upComingTask } = useContext(TaskContext);
 
-  let TaskArray = upComingTask();
-
-  let sortedTaskArray = TaskArray.sort((t1, t2) =>
-    t1.date < t2.date ? -1 : 1
-  );
-
-  console.log("Upcoming Component");
-
-  const finalTaskList = sortedTaskArray.reduce(
-    (ar, taskObj) => [...ar, ...taskObj.taskList],
-    []
-  );
-
-  //   console.log("Upcoming Task Array ", finalTaskList);
+const UpComing = ({ upComingTasks }) => {
+  console.log("Upcoming Tasks ", upComingTasks);
 
   return (
     <Container>
       <Title>Upcoming</Title>
       <TaskContainer>
-        {finalTaskList.map((task) => (
-          <Task key={task.id} {...task} />
+        {upComingTasks.map((task) => (
+          <Task key={task.id} task={task} />
         ))}
       </TaskContainer>
     </Container>
   );
 };
+
+export default connect(({ tasks }) => ({
+  upComingTasks: Object.values(tasks)
+    .filter(({ date, taskList }) => date > new Date())
+    .sort((t1, t2) => (t1.date < t2.date ? -1 : 1))
+    .reduce((ar, taskObj) => [...ar, ...taskObj.taskList], []),
+}))(UpComing);
+

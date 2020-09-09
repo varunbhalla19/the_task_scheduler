@@ -1,4 +1,4 @@
-import React, { createContext, useState } from "react";
+import React from "react";
 
 import styled from "styled-components";
 
@@ -10,29 +10,14 @@ const Title = styled.h2`
   padding: 1rem;
 `;
 
-export const WeekContext = createContext({
-  weekDay: "",
-  setWeekDay: () => {},
-});
 
 export default () => {
-  const [wday, setWday] = useState(new Date().toDateString());
-  console.log("date selected => ", wday);
-  console.log('Schedule Component');
+  console.log("Schedule Component");
   return (
     <div className="sch">
       <Title> Schedule </Title>
-
-      <WeekContext.Provider
-        value={{
-          weekDay: wday,
-          setWeekDay: (str) => setWday(str),
-        }}
-      >
-        <Weekly />
-
-        <TaskSheet />
-      </WeekContext.Provider>
+      <Weekly />
+      <TaskSheet />
     </div>
   );
 };

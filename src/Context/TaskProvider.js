@@ -11,11 +11,14 @@ Date.getToday = () => new Date().toDateString();
 
 // { a : { date : DATE ,taskList : [ {}, {} ] } , b : { date:DATE, taskList : [ {} , {} , {} ] } }
 
-const addTask = (task, tasks) => {
+const addTask = (task, tasks, isProject) => {
   if (!tasks[task.dateString]) {
     return {
       ...tasks,
-      [task.dateString]: { date: task.date, taskList: [task] },
+      [task.dateString]: {
+        date: task.date,
+        taskList: [task],
+      },
     };
   } else {
     return {
@@ -31,20 +34,23 @@ const addTask = (task, tasks) => {
 const TaskProvider = ({ children }) => {
   const [tasks, setTasks] = useState({});
 
+  console.log("tasks are ", tasks);
+
   const getUpComing = () =>
     Object.values(tasks).filter(({ date, taskList }) => date > new Date());
 
   return (
     <TaskContext.Provider
       value={{
-        addTask: (newTask) => setTasks(addTask(newTask, tasks)),
+        addTask: (newTask, isProject = false) =>
+          setTasks((tasks) => addTask(newTask, tasks, isProject)),
         tasks: tasks,
         upComingTask: getUpComing,
         todayTask: () =>
           tasks[Date.getToday()] ? tasks[Date.getToday()]["taskList"] : [],
       }}
     >
-      {children} 
+      {children}
       {/* {console.log("All Tasks ", tasks)} */}
     </TaskContext.Provider>
   );

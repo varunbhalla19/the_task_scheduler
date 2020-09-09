@@ -1,31 +1,28 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 
 // import styled from "styled-components";
 
 import Input from "../Input/Input";
+import { connect } from "react-redux";
 
-import { TaskContext } from "../../Context/TaskProvider";
+// import { TaskContext } from "../../Context/TaskProvider";
 
-
-export default () => {
+const AddTask = ({ addTask }) => {
   const [values, setValues] = useState({
     task: "",
     date: null,
     dateString: "",
   });
 
-  const { addTask } = useContext(TaskContext);
-
   const changeInp = (name, value) => setValues({ ...values, [name]: value });
 
   return (
     <>
-      {/* <Modal> */}
       <form
         onSubmit={(ev) => {
           ev.preventDefault();
           values["dateString"] = values.date.toDateString();
-          // console.log(values);
+          console.log(values);
           addTask({ ...values, id: String(Date.now()) });
         }}
       >
@@ -40,14 +37,16 @@ export default () => {
           value={values.date}
           type="date"
           inpValue={(name, value) => {
-            // console.log("value recieved ", value, typeof value);
             changeInp(name, new Date(value.split("-").join("/")));
           }}
         />
 
         <button type="submit"> Add Task </button>
       </form>
-      {/* </Modal> */}
     </>
   );
 };
+
+export default connect(null, (dispatch) => ({
+  addTask: (task) => dispatch({ type: "ADD_TASK", payload: task }),
+}))(AddTask);

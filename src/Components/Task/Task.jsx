@@ -4,6 +4,7 @@ import styled from "styled-components";
 // import ModalHoc from "../Modal/ModalHoc";
 
 import { ShowHideContext } from "../../Context/AddTaskScreen";
+import { Link } from "react-router-dom";
 
 const TaskContainer = styled.div`
   padding: 1rem 2rem;
@@ -19,7 +20,7 @@ const DateString = styled.p`
   font-size: 10px;
 `;
 
-const TaskModal = ({ text }) => (
+const TaskModal = ({ task }) => (
   <div
     style={{
       height: "100%",
@@ -28,18 +29,21 @@ const TaskModal = ({ text }) => (
       borderRadius: "2rem",
     }}
   >
-    {text}
+    {task.task}
+    {task.isProject ? <Link to={`/groups/${task.link}`}> Visit </Link> : null}
   </div>
 );
 
-export default ({ task, dateString }) => {
+export default ({ task }) => {
   const { setComponent } = useContext(ShowHideContext);
+
+  // console.log("TASK IS ", task);
 
   return (
     <>
-      <TaskContainer onClick={() => setComponent(<TaskModal text={task} />)}>
-        <p> {task} </p>
-        <DateString>{dateString}</DateString>
+      <TaskContainer onClick={() => setComponent(<TaskModal task={task} />)}>
+        <p> {task.task} </p>
+        <DateString>{task.dateString}</DateString>
       </TaskContainer>
     </>
   );

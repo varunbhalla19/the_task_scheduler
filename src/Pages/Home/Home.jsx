@@ -19,7 +19,7 @@ const HomeContainer = styled.div`
   padding: 1rem;
   display: flex;
   justify-content: space-around;
-  background: indianred;
+  // background: darkslateblue;
   flex-grow: 1;
   border-radius: 2rem;
 `;

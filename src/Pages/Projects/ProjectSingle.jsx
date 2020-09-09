@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useState } from "react";
 
 import { ReactSortable } from "react-sortablejs";
 
@@ -9,10 +9,12 @@ import styled from "styled-components";
 import Input from "../../Components/Input/Input";
 
 import { ShowHideContext } from "../../Context/AddTaskScreen";
-// import AddProject from "./AddProject";
-// import ProjectsShow from "./ProjectsShow";
 
-import { ProjectContext } from "../../Context/ProjectProvider";
+import { connect } from "react-redux";
+
+const getShortDate = (d) => {
+  return d.toLocaleDateString(undefined, { month: "short", day: "numeric" });
+};
 
 const Container = styled.div`
   padding: 1rem;
@@ -29,41 +31,32 @@ const AddBtn = styled.div`
   justify-content: flex-end;
 `;
 
-export default () => {
-  const { projId } = useParams();
-
-  const { projects, sections } = useContext(ProjectContext);
-
-  const proj = projects.find((pr) => pr.id === projId);
-
-  const sectionsArray = sections[projId] || [];
-
-  // console.log( projId, proj )
-
+const TheProjectSingle = ({ projects, sections }) => {
   return (
     <Container>
-      {proj ? (
+      {projects ? (
         <>
           <Headings>
-            <h2> {proj.projectName} </h2>
+            <h2> {projects.projectName} </h2>
             <p>
-              {proj.datefrom.getShortDate()} - {proj.dateto.getShortDate()}
+              {getShortDate(projects.datefrom)} -{" "}
+              {getShortDate(projects.dateto)}
             </p>
           </Headings>
           <AddBtn>
-            <TheAddBtn id={proj.id} secTask="section" text="Add Section" />
+            <TheAddBtn id={projects.id} secTask="section" text="Add Section" />
           </AddBtn>
           <div
             style={{
               display: "grid",
-              gridTemplateColumns: `repeat(${sectionsArray.length},1fr)`,
+              gridTemplateColumns: `repeat(${sections.length},1fr)`,
               gap: "1rem",
               margin: "2rem auto 1rem",
               width: "90%",
             }}
           >
-            {sectionsArray.map((el) => (
-              <ProjectSections section={el} key={el.id} />
+            {sections.map((el) => (
+              <ConnectedProjectSections section={el} key={el.id} />
             ))}
           </div>
         </>
@@ -76,23 +69,32 @@ export default () => {
   );
 };
 
+const SuperProjectSingle = connect(({ projects, sections }, { projId }) => ({
+  projects: projects.find((pr) => pr.id === projId),
+  sections: sections[projId] || [],
+}))(TheProjectSingle);
+
+const ProjectSingle = () => {
+  const { projId } = useParams();
+  return <SuperProjectSingle projId={projId} />;
+};
+
 const TheAddBtn = ({ id, secTask, text }) => {
   const { setComponent } = useContext(ShowHideContext);
 
   return (
     <button
-      onClick={() => setComponent(<AddSection projId={id} secTask={secTask} />)}
+      onClick={() =>
+        setComponent(<ConnectedAddSection projId={id} secTask={secTask} />)
+      }
     >
       {text}
     </button>
   );
 };
 
-const AddSection = ({ projId, secTask }) => {
+const AddSection = ({ projId, secTask, addSection, addSectionTasks }) => {
   const [sec, setSec] = useState("");
-
-  const { addSection, addSectionTasks } = useContext(ProjectContext);
-
   return (
     <>
       <form
@@ -119,18 +121,18 @@ const AddSection = ({ projId, secTask }) => {
   );
 };
 
-// const compareArrays = (ar1,ar2) => {
-//   ar1.forEach(element => {
+const ConnectedAddSection = connect(null, (dispatch) => ({
+  addSection: (task, id) =>
+    dispatch({ type: "ADD_SECTION", payload: { section: task, projId: id } }),
+  addSectionTasks: (task, id) =>
+    dispatch({
+      type: "ADD_SECTIONTASK",
+      payload: { section: task, projId: id },
+    }),
+}))(AddSection);
 
-//   });
-// }
-
-const ProjectSections = ({ section }) => {
-  const { sectionTasks, setTaskArrayDD } = useContext(ProjectContext);
-
-  const tasksArray = sectionTasks[section.id] || [];
-
-  console.log('Project Sections');
+const ProjectSections = ({ section, tasksArray, setTaskArrayDD }) => {
+  console.log("Project Sections ", section.value);
 
   return (
     <div>
@@ -142,8 +144,8 @@ const ProjectSections = ({ section }) => {
         <ReactSortable
           list={tasksArray}
           setList={(list) => {
-            console.log("setList called ", list, list === tasksArray);
-            setTaskArrayDD( section.id, list )
+            // console.log("setList called ", list, list === tasksArray);
+            setTaskArrayDD(section.id, list);
           }}
           animation="200"
           group="x"
@@ -169,3 +171,15 @@ const ProjectSections = ({ section }) => {
     </div>
   );
 };
+
+const ConnectedProjectSections = connect(
+  (state, props) => ({
+    tasksArray: state.sectionTasks[props.section.id] || [],
+  }),
+  (dispatch) => ({
+    setTaskArrayDD: (id, ar) =>
+      dispatch({ type: "NEW_AR", payload: { id: id, ar: ar } }),
+  })
+)(ProjectSections);
+
+export default ProjectSingle;

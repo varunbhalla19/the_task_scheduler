@@ -1,10 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 
 import styled from "styled-components";
 
 import WeekDay from "./WeekDay";
-
-// import { WeekContext } from "./Schedule";
+import { connect } from "react-redux";
 
 const HeadContainer = styled.div`
   padding: 0.5rem 6rem;
@@ -45,67 +44,23 @@ const Line = styled.hr`
   margin: 0rem auto;
 `;
 
-Date.setDateNum = (date, num) => {
-  let d = new Date(date);
-  d.setDate(num + date.getDate());
-  if (d.toDateString() === new Date().toDateString()) {
-    d.isToday = true;
-  }
-  return d;
-};
-
-Date.getFirstWeekSunday = () => {
-  let d = new Date();
-  let day = d.getDay();    // 1 Monday -> 7
-  // let res = day === 0 ? 0 : 0 - day;
-  d.setDate(d.getDate() - day);
-  return d;
-};
-
-const getInitWeekDays = () => {
-  console.log("initWeekDays called");
-  let ar = new Array(7).fill(0);
-  let fd = Date.getFirstWeekSunday();
-  let newAr = ar.map((el, index) => Date.setDateNum(fd, index));
-  return newAr;
-};
-
-const getNextWeek = (d) => {
-  let ar = new Array(7).fill(0);
-  return ar.map((el, index) => Date.setDateNum(d, index + 1));
-};
-
-const genPrevWeek = (d) => {
-  let ar = new Array(7).fill(0);
-  return ar.map((el, index) => Date.setDateNum(d, -1 - index)).reverse();
-};
-
-export default () => {
-  const [weekDays, setWeekDays] = useState([]);
-
-  useEffect(() => {
-    setWeekDays([...getInitWeekDays()]);
-  }, []);
-
-  const month =
-    weekDays.length === 0
-      ? null
-      : weekDays[6].toLocaleDateString(undefined, { month: "long" });
-
+const Weekly = ({
+  week,
+  prevWeekDays,
+  presentWeekDays,
+  nextWeekDays,
+  month,
+}) => {
   return (
     <div>
       <HeadContainer>
         <MonthTitle> {month} </MonthTitle>
-        <Arrows onClick={(e) => setWeekDays(genPrevWeek(weekDays[0]))}>
-          {"<"}
-        </Arrows>
-        <Present onClick={(e) => setWeekDays(getInitWeekDays())} />
-        <Arrows onClick={(ev) => setWeekDays(getNextWeek(weekDays[6]))}>
-          {">"}
-        </Arrows>
+        <Arrows onClick={(e) => prevWeekDays(week[0])}>{"<"}</Arrows>
+        <Present onClick={(e) => presentWeekDays()} />
+        <Arrows onClick={(ev) => nextWeekDays(week[6])}>{">"}</Arrows>
       </HeadContainer>
       <WeekContainer>
-        {weekDays.map((day) => (
+        {week.map((day) => (
           <WeekDay key={day.toLocaleDateString()} day={day} />
         ))}
       </WeekContainer>
@@ -113,3 +68,15 @@ export default () => {
     </div>
   );
 };
+
+export default connect(
+  ({ week }) => ({
+    month: week[6].toLocaleDateString(undefined, { month: "long" }),
+    week,
+  }),
+  (dispatch) => ({
+    prevWeekDays: (day) => dispatch({ type: "PREV_WEEK", payload: day }),
+    presentWeekDays: () => dispatch({ type: "INIT_WEEK" }),
+    nextWeekDays: (day) => dispatch({ type: "NEXT_WEEK", payload: day }),
+  })
+)(Weekly);

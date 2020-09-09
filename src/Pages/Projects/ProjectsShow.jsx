@@ -1,10 +1,9 @@
-import React, { useContext } from "react";
+import React from "react";
 
 import styled from "styled-components";
 
-import { ProjectContext } from "../../Context/ProjectProvider";
-
 import { useHistory, useRouteMatch } from "react-router-dom";
+import { connect } from "react-redux";
 
 const ProjectsShow = styled.div`
   //   flex-grow: 1;
@@ -32,17 +31,15 @@ const PrDate = styled.div`
   margin: 0.5rem 0;
 `;
 
-Date.prototype.getShortDate = function () {
-  return this.toLocaleDateString(undefined, { month: "short", day: "numeric" });
+const getShortDate = (d) => {
+  return d.toLocaleDateString(undefined, { month: "short", day: "numeric" });
 };
 
-const TheProject = () => {
-  const { projects } = useContext(ProjectContext);
-  let history = useHistory();
-
+const TheProject = ({ projects }) => {
   console.log("ProjectShow Rendered");
 
-  const match = useRouteMatch();
+  const match = useRouteMatch(),
+    history = useHistory();
 
   return (
     <ProjectsShow>
@@ -53,7 +50,7 @@ const TheProject = () => {
         >
           <h3>{pr.projectName}</h3>
           <PrDate>
-            {pr.datefrom.getShortDate()} - {pr.dateto.getShortDate()}
+            {getShortDate(pr.datefrom)} - {getShortDate(pr.dateto)}
           </PrDate>
         </Project>
       ))}
@@ -61,4 +58,6 @@ const TheProject = () => {
   );
 };
 
-export default TheProject;
+export default connect((state) => ({
+  projects: state.projects,
+}))(TheProject);

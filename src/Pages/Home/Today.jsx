@@ -1,15 +1,16 @@
-import React, { useContext } from "react";
+import React from "react";
 
 // import styled from "styled-components";
 
-import { TaskContext } from "../../Context/TaskProvider";
+// import { TaskContext } from "../../Context/TaskProvider";
 
 import Task from "../../Components/Task/Task";
 
 import { Container, Title, TaskContainer } from "./styles";
+import { connect } from "react-redux";
 
-export default () => {
-  const { todayTask } = useContext(TaskContext);
+const Today = ({ todayTask }) => {
+  // const { todayTask } = useContext(TaskContext);
 
   console.log("Today Component");
 
@@ -17,10 +18,15 @@ export default () => {
     <Container>
       <Title>Today </Title>
       <TaskContainer>
-        {todayTask().map((task) => (
-          <Task key={task.id} {...task} />
+        {todayTask.map((task) => (
+          <Task key={task.id} task={task} />
         ))}
       </TaskContainer>
     </Container>
   );
 };
+export default connect((state) => ({
+  todayTask: state.tasks[Date.getToday()]
+    ? state.tasks[Date.getToday()].taskList
+    : [],
+}))(Today);

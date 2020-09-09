@@ -5,7 +5,8 @@ const Container = styled.div`
   flex-direction: column;
   width: 45%;
   border-radius: 2rem;
-  background: #cde;
+  background: #fff;
+  box-shadow : 0 2px 10px 0px rgba(0,0,0,0.5);
 `;
 
 const Title = styled.h2`
