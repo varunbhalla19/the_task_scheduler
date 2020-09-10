@@ -32,10 +32,14 @@ const MonthTitle = styled.h3`
 `;
 
 const WeekContainer = styled.div`
-    padding 0rem 2rem ;
+    width : 80% ;
+    padding : 0 1.5rem;
+    margin : 0.5rem auto ;
     display : flex ;
     align-items : center ;
     justify-content : space-around ;
+    border : 1px solid blue;
+    border-radius : 2rem ;
 `;
 
 const Line = styled.hr`
@@ -64,7 +68,7 @@ const Weekly = ({
           <WeekDay key={day.toLocaleDateString()} day={day} />
         ))}
       </WeekContainer>
-      <Line />
+      {/* <Line /> */}
     </div>
   );
 };

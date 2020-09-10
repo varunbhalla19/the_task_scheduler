@@ -8,6 +8,8 @@ import weekDayReducer from './weekday-reducer'
 
 import weekReducer from './week-reducer'
 
+import DeleteDropReducer from './deleteDrop-reducer'
+
 // const projectReducer = (state = [], action) => {};
 
 const rootReducer = combineReducers({
@@ -17,6 +19,7 @@ const rootReducer = combineReducers({
   sectionTasks: sectionTasksReducer,
   weekDay : weekDayReducer,
   week : weekReducer,
+  inDelete : DeleteDropReducer
 });
 
 export default rootReducer;

@@ -20,11 +20,20 @@ if (process.env.NODE_ENV === "production") {
   });
 }
 
+const initProj = [
+  {
+    projectName: "Abc Xyz",
+    id: "7288288",
+    datefrom: new Date(2020, 8, 9),
+    dateto: new Date(2020, 8, 20),
+  },
+];
+
 app.listen(port, (error) => {
   if (error) throw error;
   console.log("Server running on port " + port);
 });
 
-app.get("/hi", (req, res) => res.status(200).json({
-    msg : "Hey"
-}));
+app.get("/project", (req, res) =>
+  res.status(200).json(initProj)
+);

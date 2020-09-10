@@ -1,9 +1,5 @@
 import React from "react";
 
-// import styled from "styled-components";
-
-// import { TaskContext } from "../../Context/TaskProvider";
-
 import Task from "../../Components/Task/Task";
 
 import { Container, Title, TaskContainer } from "./styles";

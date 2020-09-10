@@ -20,6 +20,10 @@ h6 {
   padding: 0;
 }
 
+/* *.grab {
+  cursor: grab;
+} */
+
 
 *::-webkit-scrollbar {
   width: 0;               /* width of the entire scrollbar */

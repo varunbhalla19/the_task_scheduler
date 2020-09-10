@@ -9,9 +9,9 @@ const initProj = [
 
 const initSections = {
   7288288: [
-    { id: "7288288959", value: "Section A" },
-    { id: "7288288958", value: "Section B" },
-    { id: "7288288957", value: "Section C" },
+    { id: "7288288959", value: "Done" },
+    { id: "7288288958", value: "In Progress" },
+    { id: "7288288957", value: "UpComing" },
   ],
 };
 
@@ -108,6 +108,13 @@ const sectionTasksReducer = (state = initSectionTasks, { type, payload }) => {
       return {
         ...state,
         [payload.id]: payload.ar,
+      };
+    case "DEL_SEC_TASK":
+      return {
+        ...state,
+        [payload.arId]: state[payload.arId].filter(
+          (el) => el.id !== payload.id
+        ),
       };
     default:
       return state;

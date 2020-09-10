@@ -8,7 +8,7 @@ const TaskSheet = ({ weekDay, taskList }) => {
 
   return (
     <>
-      <h4> {weekDay} </h4>
+      <h4 style={{textAlign:'right'}} > {weekDay} </h4>
       <div>
         {taskList.map((task) => (
           <Task task={task} key={task.id} dateString={weekDay} />

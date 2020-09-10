@@ -10,15 +10,25 @@ const WeekName = styled.div`
 
 const Day = styled.div`
   cursor: pointer;
-  padding: 1rem 2rem;
+  padding: 0.5rem;
+  margin: 0 0.5rem;
+  // width: 60px;
   flex-grow: 1;
+  position: relative;
   &:hover {
     background: #eee;
+  }
+  div {
+    position: relative;
+    z-index: 2;
   }
 
   border: 1px solid ${({ isToday }) => (isToday ? "indianred" : "transparent")};
   color: ${({ hasTasks }) => (hasTasks ? "red" : "black")};
-`;
+  `;
+  // color: ${({ isToday }) => (isToday ? "#eee" : "#111")};
+
+
 
 const WeekDay = ({ day, hasTasks, setWeekDay }) => {
   return (

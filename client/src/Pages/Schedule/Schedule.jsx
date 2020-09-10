@@ -16,6 +16,7 @@ export default () => {
   return (
     <div className="sch">
       <Title> Schedule </Title>
+
       <Weekly />
       <TaskSheet />
     </div>

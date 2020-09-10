@@ -28,9 +28,11 @@ const Option = styled.div`
   border-radius: 1rem;
   display: flex;
   align-items: center;
+  justify-content : space-between ;
+  min-width : 120px;
   svg {
-    height: 36px;
-    width: 36px;
+    height: 28px;
+    width: 28px;
     * {
       pointer-events: none;
     }
@@ -40,7 +42,7 @@ const Option = styled.div`
 const Nav = styled(NavLink)`
   display: block;
   margin: 1rem 0 0 0.5rem;
-
+  text-decoration: none;
   &:nth-last-child(1) {
     margin-top: 7rem;
   }
@@ -51,7 +53,16 @@ const Nav = styled(NavLink)`
     svg {
       fill: #cdecde;
     }
+    h6 {
+      color : #defdef;
+    }
   }
+
+`;
+
+const NavName = styled.h6`
+  text-decoration: none;
+  color : #112233;
 `;
 
 export default () => (
@@ -59,33 +70,33 @@ export default () => (
     <Options>
       <Nav exact to="/">
         <Option>
-          <HomeSvg />
+          <NavName> Home </NavName> <HomeSvg />
         </Option>
       </Nav>
 
       <Nav to="/tasks">
         <Option>
-          <TaskSvg />
+          <NavName> Tasks </NavName> <TaskSvg />
         </Option>
       </Nav>
       <Nav to="/chat">
         <Option>
-          <TextSvg />
+          <NavName> Chat </NavName> <TextSvg />
         </Option>
       </Nav>
       <Nav to="/schedule">
         <Option>
-          <CalendarSvg />
+          <NavName> Schedule </NavName> <CalendarSvg />
         </Option>
       </Nav>
       <Nav to="/groups">
         <Option>
-          <PeopleSvg />
+          <NavName> Projects </NavName> <PeopleSvg />
         </Option>
       </Nav>
       <Nav to="/settings">
         <Option>
-          <SettingsSvg />
+          <NavName> Settings </NavName> <SettingsSvg />
         </Option>
       </Nav>
     </Options>

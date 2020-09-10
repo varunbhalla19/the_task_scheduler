@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import "./App.css";
 
 import Header from "./Components/Header/Header";
@@ -8,12 +8,6 @@ import Main from "./Pages/Main/Main";
 import Modal from "./Components/Modal/Modal";
 
 function App() {
-  useEffect(() => {
-    fetch("/hi")
-      .then((res) => res.json())
-      .then(console.log);
-  }, []);
-
   return (
     <div className="App">
       <Sidebar />

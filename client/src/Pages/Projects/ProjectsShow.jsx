@@ -52,6 +52,7 @@ const TheProject = ({ projects }) => {
           <PrDate>
             {getShortDate(pr.datefrom)} - {getShortDate(pr.dateto)}
           </PrDate>
+          {/*  Percentage to Show!  */}
         </Project>
       ))}
     </ProjectsShow>

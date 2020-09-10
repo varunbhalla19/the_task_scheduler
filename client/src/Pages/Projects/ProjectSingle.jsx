@@ -12,6 +12,8 @@ import { ShowHideContext } from "../../Context/AddTaskScreen";
 
 import { connect } from "react-redux";
 
+import ProjectSections from "./ProjectSections";
+
 const getShortDate = (d) => {
   return d.toLocaleDateString(undefined, { month: "short", day: "numeric" });
 };
@@ -56,7 +58,7 @@ const TheProjectSingle = ({ projects, sections }) => {
             }}
           >
             {sections.map((el) => (
-              <ConnectedProjectSections section={el} key={el.id} />
+              <ProjectSections section={el} key={el.id} />
             ))}
           </div>
         </>
@@ -79,7 +81,7 @@ const ProjectSingle = () => {
   return <SuperProjectSingle projId={projId} />;
 };
 
-const TheAddBtn = ({ id, secTask, text }) => {
+export const TheAddBtn = ({ id, secTask, text }) => {
   const { setComponent } = useContext(ShowHideContext);
 
   return (
@@ -130,56 +132,5 @@ const ConnectedAddSection = connect(null, (dispatch) => ({
       payload: { section: task, projId: id },
     }),
 }))(AddSection);
-
-const ProjectSections = ({ section, tasksArray, setTaskArrayDD }) => {
-  console.log("Project Sections ", section.value);
-
-  return (
-    <div>
-      <h4>
-        {section.value} : {tasksArray.length}
-      </h4>
-
-      <ul>
-        <ReactSortable
-          list={tasksArray}
-          setList={(list) => {
-            // console.log("setList called ", list, list === tasksArray);
-            setTaskArrayDD(section.id, list);
-          }}
-          animation="200"
-          group="x"
-          ghostClass="drag"
-        >
-          {tasksArray.map((el) => (
-            <div
-              style={{
-                border: "1px solid black",
-                margin: "0.5rem 0",
-                padding: "1rem",
-                cursor: "pointer",
-              }}
-              key={el.id}
-            >
-              {el.value}
-            </div>
-          ))}
-        </ReactSortable>
-      </ul>
-
-      <TheAddBtn id={section.id} secTask="task" text="Add Task" />
-    </div>
-  );
-};
-
-const ConnectedProjectSections = connect(
-  (state, props) => ({
-    tasksArray: state.sectionTasks[props.section.id] || [],
-  }),
-  (dispatch) => ({
-    setTaskArrayDD: (id, ar) =>
-      dispatch({ type: "NEW_AR", payload: { id: id, ar: ar } }),
-  })
-)(ProjectSections);
 
 export default ProjectSingle;
