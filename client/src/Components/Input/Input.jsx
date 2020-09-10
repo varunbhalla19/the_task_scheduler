@@ -15,7 +15,7 @@ const InputCover = styled.div`
   }
 `;
 
-const Input = ({ placeholder, inpValue, name, type }) => {
+const Input = ({ placeholder, inpValue, name, type, value }) => {
   return (
     <InputCover>
       <input
@@ -23,6 +23,7 @@ const Input = ({ placeholder, inpValue, name, type }) => {
         type={type}
         placeholder={placeholder}
         onChange={(ev) => inpValue(name, ev.target.value)}
+        value={value}
       />
     </InputCover>
   );

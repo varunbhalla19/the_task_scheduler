@@ -18,10 +18,20 @@ const addTask = (tasks, task) => {
   }
 };
 
-export default (state = {}, action) => {
-  switch (action.type) {
+const deleteTask = (id, ar) => ar.filter((el) => el.id !== id);
+
+export default (state = {}, { type, payload }) => {
+  switch (type) {
     case "ADD_TASK":
-      return addTask(state, action.payload); // action.payload would be task object
+      return addTask(state, payload);
+    case "DELETE_TASK":
+      return {
+        ...state,
+        [payload.dateString]: {
+          ...state[payload.dateString],
+          taskList: deleteTask(payload.id, state[payload.dateString].taskList),
+        },
+      };
     default:
       return state;
   }

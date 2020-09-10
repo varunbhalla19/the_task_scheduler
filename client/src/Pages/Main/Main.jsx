@@ -23,7 +23,7 @@ const Main = styled.div`
 
 const Chat = () => <h2>Chat</h2>;
 
-const Tasks = () => <h2>Tasks</h2>;
+// const Tasks = () => <h2>Tasks</h2>;
 
 const Settings = () => <h2>Settings</h2>;
 
@@ -32,7 +32,7 @@ const MainPage = () => (
     <div>
       <Route path="/" exact component={Home} />
       <Route path="/chat" component={Chat} />
-      <Route path="/tasks" component={Tasks} />
+      {/* <Route path="/tasks" component={Tasks} /> */}
       <Route path="/schedule" component={Schedule} />
       <Route path="/groups" component={Projects} />
       <Route path="/settings" component={Settings} />

@@ -1,20 +1,23 @@
 import React, { useState } from "react";
 
-// import styled from "styled-components";
-
 import Input from "../Input/Input";
 import { connect } from "react-redux";
 
-// import { TaskContext } from "../../Context/TaskProvider";
+const initValues = {
+  task: "",
+  date: "",
+  dateString: "",
+  descp: "",
+};
 
 const AddTask = ({ addTask }) => {
-  const [values, setValues] = useState({
-    task: "",
-    date: null,
-    dateString: "",
-  });
+  const [values, setValues] = useState(initValues);
 
   const changeInp = (name, value) => setValues({ ...values, [name]: value });
+
+  // const resetform = () => setValues({ ...initValues });
+
+  console.log("Add Task", values);
 
   return (
     <>
@@ -22,8 +25,8 @@ const AddTask = ({ addTask }) => {
         onSubmit={(ev) => {
           ev.preventDefault();
           values["dateString"] = values.date.toDateString();
-          console.log(values);
           addTask({ ...values, id: String(Date.now()) });
+          // resetform();
         }}
       >
         <Input
@@ -33,14 +36,18 @@ const AddTask = ({ addTask }) => {
           inpValue={changeInp}
         />
         <Input
+          name="descp"
+          value={values.descp}
+          placeholder="Add Description (Optional)..."
+          inpValue={changeInp}
+        />
+        <Input
           name="date"
-          value={values.date}
           type="date"
           inpValue={(name, value) => {
             changeInp(name, new Date(value.split("-").join("/")));
           }}
         />
-
         <button type="submit"> Add Task </button>
       </form>
     </>

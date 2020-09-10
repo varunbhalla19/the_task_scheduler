@@ -6,17 +6,10 @@ import Weekly from "./Weekly";
 
 import TaskSheet from "./TaskSheet";
 
-const Title = styled.h2`
-  padding: 1rem;
-`;
-
-
 export default () => {
   console.log("Schedule Component");
   return (
-    <div className="sch">
-      <Title> Schedule </Title>
-
+    <div style={{ height: "100%", display: "flex", flexDirection: "column" }}>
       <Weekly />
       <TaskSheet />
     </div>

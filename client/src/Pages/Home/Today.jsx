@@ -17,7 +17,7 @@ const Today = ({ todayTask }) => {
       <Title>Today </Title>
       <TaskContainer>
         {todayTask.map((task) => (
-          <Task key={task.id} task={task} />
+          <Task key={task.id} todayShow task={task} />
         ))}
       </TaskContainer>
     </Container>

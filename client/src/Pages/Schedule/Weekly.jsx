@@ -5,10 +5,15 @@ import styled from "styled-components";
 import WeekDay from "./WeekDay";
 import { connect } from "react-redux";
 
-const HeadContainer = styled.div`
-  padding: 0.5rem 6rem;
+const Head = styled.div`
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
+  align-items: center;
+  padding : 1rem 3rem ;
+`;
+
+const HeadContainer = styled.div`
+  display: flex;
   align-items: center;
 `;
 
@@ -28,24 +33,29 @@ const Present = styled.span`
 `;
 
 const MonthTitle = styled.h3`
-  margin-right: 3rem;
+  margin-right: 1rem;
 `;
 
 const WeekContainer = styled.div`
-    width : 80% ;
-    padding : 0 1.5rem;
-    margin : 0.5rem auto ;
-    display : flex ;
-    align-items : center ;
-    justify-content : space-around ;
-    border : 1px solid blue;
-    border-radius : 2rem ;
+  width: 70%;
+  padding: 0 1.5rem;
+  margin: 0.5rem auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  // border: 1px solid blue;
+  border-radius : 4rem;
+  box-shadow : 0px 3px 10px 0px rgba(0,0,0,0.4);
 `;
 
 const Line = styled.hr`
   width: 85%;
   border: 1px solid #ccc;
   margin: 0rem auto;
+`;
+
+const Title = styled.h2`
+  // padding: 1rem;
 `;
 
 const Weekly = ({
@@ -57,18 +67,21 @@ const Weekly = ({
 }) => {
   return (
     <div>
-      <HeadContainer>
-        <MonthTitle> {month} </MonthTitle>
-        <Arrows onClick={(e) => prevWeekDays(week[0])}>{"<"}</Arrows>
-        <Present onClick={(e) => presentWeekDays()} />
-        <Arrows onClick={(ev) => nextWeekDays(week[6])}>{">"}</Arrows>
-      </HeadContainer>
+      <Head>
+        <Title> Schedule </Title>
+        <HeadContainer>
+          <MonthTitle> {month} </MonthTitle>
+          <Arrows onClick={(e) => prevWeekDays(week[0])}>{"<"}</Arrows>
+          <Present onClick={(e) => presentWeekDays()} />
+          <Arrows onClick={(ev) => nextWeekDays(week[6])}>{">"}</Arrows>
+        </HeadContainer>
+      </Head>
+
       <WeekContainer>
         {week.map((day) => (
           <WeekDay key={day.toLocaleDateString()} day={day} />
         ))}
       </WeekContainer>
-      {/* <Line /> */}
     </div>
   );
 };

@@ -5,7 +5,7 @@ import styled from "styled-components";
 import { NavLink } from "react-router-dom";
 
 import { ReactComponent as HomeSvg } from "../../Assets/Svgs/home-24px.svg";
-import { ReactComponent as TaskSvg } from "../../Assets/Svgs/task.svg";
+// import { ReactComponent as TaskSvg } from "../../Assets/Svgs/task.svg";
 import { ReactComponent as SettingsSvg } from "../../Assets/Svgs/settings-24px.svg";
 import { ReactComponent as TextSvg } from "../../Assets/Svgs/chat-24px.svg";
 import { ReactComponent as CalendarSvg } from "../../Assets/Svgs/calendar.svg";
@@ -74,11 +74,11 @@ export default () => (
         </Option>
       </Nav>
 
-      <Nav to="/tasks">
+      {/* <Nav to="/tasks">
         <Option>
           <NavName> Tasks </NavName> <TaskSvg />
         </Option>
-      </Nav>
+      </Nav> */}
       <Nav to="/chat">
         <Option>
           <NavName> Chat </NavName> <TextSvg />
