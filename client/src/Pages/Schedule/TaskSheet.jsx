@@ -33,7 +33,7 @@ const TaskSheet = ({ weekDay, taskList }) => {
       {
         <TaskS>
           {taskList.map((task) => (
-            <Task task={task} key={task.id} dateString={weekDay} />
+            <Task task={task} key={task._id} todayShow dateString={weekDay} />
           ))}
         </TaskS>
       }

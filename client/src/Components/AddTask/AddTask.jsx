@@ -3,6 +3,8 @@ import React, { useState } from "react";
 import Input from "../Input/Input";
 import { connect } from "react-redux";
 
+import { addTaskAc } from "../../redux/action-creators/task-ac";
+
 const initValues = {
   task: "",
   date: "",
@@ -17,7 +19,7 @@ const AddTask = ({ addTask }) => {
 
   // const resetform = () => setValues({ ...initValues });
 
-  console.log("Add Task", values);
+  // console.log("Add Task", values);
 
   return (
     <>
@@ -25,7 +27,7 @@ const AddTask = ({ addTask }) => {
         onSubmit={(ev) => {
           ev.preventDefault();
           values["dateString"] = values.date.toDateString();
-          addTask({ ...values, id: String(Date.now()) });
+          addTask({ ...values });
           // resetform();
         }}
       >
@@ -55,5 +57,6 @@ const AddTask = ({ addTask }) => {
 };
 
 export default connect(null, (dispatch) => ({
-  addTask: (task) => dispatch({ type: "ADD_TASK", payload: task }),
+  // addTask: (task) => dispatch({ type: "ADD_TASK", payload: task }),
+  addTask: (task) => dispatch(addTaskAc(task)),
 }))(AddTask);

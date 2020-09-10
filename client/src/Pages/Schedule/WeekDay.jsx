@@ -71,7 +71,11 @@ const WeekDay = ({ day, hasTasks, setWeekDay }) => {
 
 export default connect(
   ({ tasks }, { day }) => ({
-    hasTasks: tasks[day.toDateString()] ? true : false,
+    hasTasks: tasks[day.toDateString()]
+      ? tasks[day.toDateString()].taskList.length === 0
+        ? false
+        : true
+      : false,
   }),
   (dispatch) => ({
     setWeekDay: (dayStr) => dispatch({ type: "SET_WDAY", payload: dayStr }),

@@ -6,8 +6,8 @@ import { NavLink } from "react-router-dom";
 
 import { ReactComponent as HomeSvg } from "../../Assets/Svgs/home-24px.svg";
 // import { ReactComponent as TaskSvg } from "../../Assets/Svgs/task.svg";
+// import { ReactComponent as TextSvg } from "../../Assets/Svgs/chat-24px.svg";
 import { ReactComponent as SettingsSvg } from "../../Assets/Svgs/settings-24px.svg";
-import { ReactComponent as TextSvg } from "../../Assets/Svgs/chat-24px.svg";
 import { ReactComponent as CalendarSvg } from "../../Assets/Svgs/calendar.svg";
 import { ReactComponent as PeopleSvg } from "../../Assets/Svgs/people-24px.svg";
 
@@ -28,8 +28,8 @@ const Option = styled.div`
   border-radius: 1rem;
   display: flex;
   align-items: center;
-  justify-content : space-between ;
-  min-width : 120px;
+  justify-content: space-between;
+  min-width: 120px;
   svg {
     height: 28px;
     width: 28px;
@@ -54,15 +54,14 @@ const Nav = styled(NavLink)`
       fill: #cdecde;
     }
     h6 {
-      color : #defdef;
+      color: #defdef;
     }
   }
-
 `;
 
 const NavName = styled.h6`
   text-decoration: none;
-  color : #112233;
+  color: #112233;
 `;
 
 export default () => (
@@ -79,11 +78,11 @@ export default () => (
           <NavName> Tasks </NavName> <TaskSvg />
         </Option>
       </Nav> */}
-      <Nav to="/chat">
+      {/* <Nav to="/chat">
         <Option>
           <NavName> Chat </NavName> <TextSvg />
         </Option>
-      </Nav>
+      </Nav> */}
       <Nav to="/schedule">
         <Option>
           <NavName> Schedule </NavName> <CalendarSvg />

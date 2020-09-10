@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 
-import { ReactSortable } from "react-sortablejs";
+// import { ReactSortable } from "react-sortablejs";
 
 import { useParams, Redirect } from "react-router-dom";
 

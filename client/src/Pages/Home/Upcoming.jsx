@@ -14,7 +14,7 @@ const UpComing = ({ upComingTasks }) => {
       <Title>Upcoming</Title>
       <TaskContainer>
         {upComingTasks.map((task) => (
-          <Task key={task.id} task={task} />
+          <Task key={task._id} task={task} />
         ))}
       </TaskContainer>
     </Container>

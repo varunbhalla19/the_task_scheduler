@@ -10,6 +10,8 @@ import { ReactComponent as MoreSvg } from "../../Assets/Svgs/more_arrow.svg";
 
 // import ModalHoc from "../Modal/ModalHoc";
 
+import { deleteTaskAc } from "../../redux/action-creators/task-ac";
+
 import { ShowHideContext } from "../../Context/AddTaskScreen";
 import { Link, useHistory } from "react-router-dom";
 
@@ -19,7 +21,7 @@ const TaskContainer = styled.div`
   text-align: left;
   cursor: pointer;
   border-radius: 1rem;
-  box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.2);
+  box-shadow: 0 2px 8px 1px rgba(0, 0, 0, 0.2);
   margin: 0.5rem auto;
   display: flex;
   // align-items: center;
@@ -27,6 +29,7 @@ const TaskContainer = styled.div`
   flex-direction: column;
   position: relative;
   min-height: 110px;
+  background: ${({ color }) => color};
 `;
 const Descp = styled.p`
   color: #333;
@@ -34,8 +37,8 @@ const Descp = styled.p`
   margin-top: 0.5rem;
 `;
 
-const DateString = styled.p`
-  color: #777;
+const DateString = styled.h6`
+  color: #111;
   font-size: 12px;
   margin-top: 0.5rem;
 `;
@@ -65,7 +68,7 @@ const Tasks = ({ task, todayShow, deleteTask }) => {
   const history = useHistory();
   return (
     <>
-      <TaskContainer>
+      <TaskContainer color={task.color}>
         <h3 style={{ marginBottom: "0.5rem" }}> {task.task} </h3>
         <Descp> {task.descp} </Descp>
         <DateString>
@@ -87,7 +90,7 @@ const Tasks = ({ task, todayShow, deleteTask }) => {
               }}
             />
             <DeleteSvg
-              onClick={() => deleteTask(task.id, task.dateString)}
+              onClick={() => deleteTask(task._id, task.dateString)}
               style={{
                 ...absoluteStyle,
                 bottom: "1rem",
@@ -114,6 +117,5 @@ const Tasks = ({ task, todayShow, deleteTask }) => {
 };
 
 export default connect(null, (dispatch) => ({
-  deleteTask: (id, dateString) =>
-    dispatch({ type: "DELETE_TASK", payload: { id, dateString } }),
+  deleteTask: (id, dateString) => dispatch(deleteTaskAc(id, dateString)),
 }))(Tasks);

@@ -48,11 +48,11 @@ const WeekContainer = styled.div`
   box-shadow : 0px 3px 10px 0px rgba(0,0,0,0.4);
 `;
 
-const Line = styled.hr`
-  width: 85%;
-  border: 1px solid #ccc;
-  margin: 0rem auto;
-`;
+// const Line = styled.hr`
+//   width: 85%;
+//   border: 1px solid #ccc;
+//   margin: 0rem auto;
+// `;
 
 const Title = styled.h2`
   // padding: 1rem;
