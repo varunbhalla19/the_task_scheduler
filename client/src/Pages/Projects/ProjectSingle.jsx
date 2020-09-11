@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 
 // import { ReactSortable } from "react-sortablejs";
 
@@ -13,9 +13,16 @@ import { ShowHideContext } from "../../Context/AddTaskScreen";
 import { connect } from "react-redux";
 
 import ProjectSections from "./ProjectSections";
+import {
+  addSectionTaskAc,
+  fetchSectionTaskAc,
+} from "../../redux/action-creators/project-ac";
 
 const getShortDate = (d) => {
-  return d.toLocaleDateString(undefined, { month: "short", day: "numeric" });
+  return new Date(d).toLocaleDateString(undefined, {
+    month: "short",
+    day: "numeric",
+  });
 };
 
 const Container = styled.div`
@@ -33,20 +40,28 @@ const AddBtn = styled.div`
   justify-content: flex-end;
 `;
 
-const TheProjectSingle = ({ projects, sections }) => {
+const TheProjectSingle = ({
+  projects,
+  sections,
+  projId,
+  fetchSectionTaskAc,
+}) => {
+  useEffect(() => {
+    fetchSectionTaskAc(projId);
+  }, [fetchSectionTaskAc, projId]);
   return (
     <Container>
       {projects ? (
         <>
           <Headings>
-            <h2> {projects.projectName} </h2>
+            <h2> {projects.name} </h2>
             <p>
               {getShortDate(projects.datefrom)} -{" "}
               {getShortDate(projects.dateto)}
             </p>
           </Headings>
           <AddBtn>
-            <TheAddBtn id={projects.id} secTask="section" text="Add Section" />
+            {/* <TheAddBtn id={projects.id} secTask="section" text="Add Section" /> */}
           </AddBtn>
           <div
             style={{
@@ -58,7 +73,7 @@ const TheProjectSingle = ({ projects, sections }) => {
             }}
           >
             {sections.map((el) => (
-              <ProjectSections section={el} key={el.id} />
+              <ProjectSections section={el} key={el} projId={projId} />
             ))}
           </div>
         </>
@@ -71,23 +86,28 @@ const TheProjectSingle = ({ projects, sections }) => {
   );
 };
 
-const SuperProjectSingle = connect(({ projects, sections }, { projId }) => ({
-  projects: projects.find((pr) => pr.id === projId),
-  sections: sections[projId] || [],
-}))(TheProjectSingle);
+const SuperProjectSingle = connect(
+  ({ projects }, { projId }) => ({
+    projects: projects.find((pr) => pr._id === projId),
+    sections: ["Done", "In Progress", "UpComing"],
+  }),
+  (dispatch) => ({
+    fetchSectionTaskAc: (projId) => dispatch(fetchSectionTaskAc(projId)),
+  })
+)(TheProjectSingle);
 
 const ProjectSingle = () => {
   const { projId } = useParams();
   return <SuperProjectSingle projId={projId} />;
 };
 
-export const TheAddBtn = ({ id, secTask, text }) => {
+export const TheAddBtn = ({ section, text, projId }) => {
   const { setComponent } = useContext(ShowHideContext);
 
   return (
     <button
       onClick={() =>
-        setComponent(<ConnectedAddSection projId={id} secTask={secTask} />)
+        setComponent(<ConnectedAddSection section={section} projId={projId} />)
       }
     >
       {text}
@@ -95,27 +115,24 @@ export const TheAddBtn = ({ id, secTask, text }) => {
   );
 };
 
-const AddSection = ({ projId, secTask, addSection, addSectionTasks }) => {
+const AddSection = ({ section, addSectionTaskAc, projId }) => {
   const [sec, setSec] = useState("");
+
   return (
     <>
       <form
         onSubmit={(ev) => {
           ev.preventDefault();
-          if (!sec) {
-            return;
-          }
-          if (secTask === "section") {
-            addSection({ value: sec, id: Date.now() }, projId);
-          } else {
-            addSectionTasks({ value: sec, id: Date.now() }, projId);
+          if (sec) {
+            console.log(sec, section, projId);
+            addSectionTaskAc({ name: sec, section: section }, projId);
           }
         }}
       >
         <Input
           inpValue={(name, value) => setSec(value)}
           type="text"
-          placeholder={`Add ${secTask}`}
+          placeholder={`Add Task`}
         />
         <button> Send </button>
       </form>
@@ -124,13 +141,22 @@ const AddSection = ({ projId, secTask, addSection, addSectionTasks }) => {
 };
 
 const ConnectedAddSection = connect(null, (dispatch) => ({
-  addSection: (task, id) =>
-    dispatch({ type: "ADD_SECTION", payload: { section: task, projId: id } }),
-  addSectionTasks: (task, id) =>
-    dispatch({
-      type: "ADD_SECTIONTASK",
-      payload: { section: task, projId: id },
-    }),
+  addSectionTaskAc: (secTask, projId) =>
+    dispatch(addSectionTaskAc(secTask, projId)),
 }))(AddSection);
 
 export default ProjectSingle;
+
+// if (secTask === "section") {
+//   addSection({ value: sec, id: Date.now() }, projId);
+// } else {// }
+
+// addSection: (task, id) =>    dispatch({ type: "ADD_SECTION", payload: { section: task, projId: id } }),
+// addSectionTasks: (task, section) =>
+// dispatch({
+//   type: "ADD_SECTIONTASK",
+//   payload: { task: task, section: section },
+// }),
+
+// secTask,
+// addSection,

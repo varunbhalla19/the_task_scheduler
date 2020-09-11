@@ -6,6 +6,8 @@ import Input from "../../Components/Input/Input";
 
 import { connect } from "react-redux";
 
+import { addProjectAc } from "../../redux/action-creators/project-ac";
+
 const Container = styled.div`
   height: 100%;
   background: #ddd;
@@ -32,25 +34,25 @@ const ADDProject = ({ addProject, addTask }) => {
 
   const dataSubmitted = (ev) => {
     ev.preventDefault();
-    values["id"] = String(Date.now());
+    // values["id"] = String(Date.now());
     console.log(values);
     addProject(values);
-    addTask({
-      date: values.datefrom,
-      task: `${values.projectName} : Start`,
-      link: values.id,
-      dateString: values.datefrom.toDateString(),
-      isProject: true,
-      id: String(Date.now() + encodeURI(`${values.projectName} : Start`)),
-    });
-    addTask({
-      date: values.dateto,
-      task: `${values.projectName} : End`,
-      link: values.id,
-      id: String(Date.now() + encodeURI(`${values.projectName} : End`)),
-      dateString: values.dateto.toDateString(),
-      isProject: true,
-    });
+    // addTask({
+    //   date: values.datefrom,
+    //   task: `${values.projectName} : Start`,
+    //   link: values.id,
+    //   dateString: values.datefrom.toDateString(),
+    //   isProject: true,
+    //   id: String(Date.now() + encodeURI(`${values.projectName} : Start`)),
+    // });
+    // addTask({
+    //   date: values.dateto,
+    //   task: `${values.projectName} : End`,
+    //   link: values.id,
+    //   id: String(Date.now() + encodeURI(`${values.projectName} : End`)),
+    //   dateString: values.dateto.toDateString(),
+    //   isProject: true,
+    // });
   };
 
   return (
@@ -72,6 +74,7 @@ const ADDProject = ({ addProject, addTask }) => {
 };
 
 export default connect(null, (dispatch) => ({
-  addProject: (project) => dispatch({ type: "ADD_PROJECT", payload: project }),
-  addTask: (task) => dispatch({ type: "ADD_TASK", payload: task }),
+  addProject: (project) => dispatch(addProjectAc(project)),
+  // addProject: (project) => dispatch({ type: "ADD_PROJECT", payload: project }),
+  // addTask: (task) => dispatch({ type: "ADD_TASK", payload: task }),
 }))(ADDProject);

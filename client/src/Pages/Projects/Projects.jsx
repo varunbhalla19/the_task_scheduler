@@ -1,16 +1,15 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 
 import { Route, Switch, useRouteMatch } from "react-router-dom";
 
+import { connect } from "react-redux";
+
 import styled from "styled-components";
-
 import { ShowHideContext } from "../../Context/AddTaskScreen";
-
 import AddProject from "./AddProject";
-
 import ProjectsShow from "./ProjectsShow";
-
 import ProjectSingle from "./ProjectSingle";
+import { fetchProjectAc } from "../../redux/action-creators/project-ac";
 
 const Container = styled.div`
   height: 100%;
@@ -66,8 +65,10 @@ const StatOnly = styled.div`
   display: flex;
 `;
 
-export default () => {
+const Projects = ({ fetchProjects }) => {
   const match = useRouteMatch();
+
+  useEffect(() => fetchProjects(), [fetchProjects]);
 
   return (
     <Switch>
@@ -109,6 +110,10 @@ export default () => {
     </Switch>
   );
 };
+
+export default connect(null, (dispatch) => ({
+  fetchProjects: () => dispatch(fetchProjectAc()),
+}))(Projects);
 
 const TheAddButton = () => {
   const { setComponent } = useContext(ShowHideContext);

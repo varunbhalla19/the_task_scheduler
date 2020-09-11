@@ -32,7 +32,10 @@ const PrDate = styled.div`
 `;
 
 const getShortDate = (d) => {
-  return d.toLocaleDateString(undefined, { month: "short", day: "numeric" });
+  return new Date(d).toLocaleDateString(undefined, {
+    month: "short",
+    day: "numeric",
+  });
 };
 
 const TheProject = ({ projects }) => {
@@ -45,10 +48,11 @@ const TheProject = ({ projects }) => {
     <ProjectsShow>
       {projects.map((pr) => (
         <Project
-          onClick={(ev) => history.push(`${match.url}/${pr.id}`)}
-          key={pr.id}
+          onClick={(ev) => history.push(`${match.url}/${pr._id}`)}
+          key={pr._id}
         >
-          <h3>{pr.projectName}</h3>
+          {/* {console.log(new Date(pr.datefrom), new Date(pr.dateto))} */}
+          <h3>{pr.name}</h3>
           <PrDate>
             {getShortDate(pr.datefrom)} - {getShortDate(pr.dateto)}
           </PrDate>

@@ -29,7 +29,17 @@ const TaskSheet = ({ weekDay, taskList }) => {
 
   return (
     <Cover>
-      <h4 style={{ textAlign: "left" }}> {weekDay} </h4>
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+        }}
+      >
+        <h4>{weekDay}</h4>
+        <h4> {weekDay === new Date().toDateString() ? "Today" : null} </h4>
+        <div style={{ width: "60px" }}></div>
+      </div>
       {
         <TaskS>
           {taskList.map((task) => (

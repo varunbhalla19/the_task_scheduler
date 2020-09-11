@@ -1,7 +1,10 @@
-POST http://localhost:8000/tasks HTTP/1.1
-content-type: application/json
+GET http://localhost:8000/secTask/5f5b174b4b24f337b04ff0bd HTTP/1.1
+# content-type: application/json
 
-{
-    "name": "sample",
-    "time": "Wed, 21 Oct 2015 18:27:50 GMT"
-}
+# {
+#     "secTask": {
+#         "name" : "Develop Backend",
+#         "section" : "UpComing"
+#     },
+    # "projId": "5f5b174b4b24f337b04ff0bd"
+# }

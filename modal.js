@@ -12,12 +12,39 @@ const TaskSchema = new mongoose.Schema({
   date: String,
   dateString: String,
   descp: String,
+  // color: String,
+});
+
+const ProjectSchema = new mongoose.Schema({
+  name: String,
+  datefrom: String,
+  dateto: String,
+  sectionTasks: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "sectionTasks",
+    },
+  ],
+  // color: String,
+});
+
+const SectionTaskSchema = new mongoose.Schema({
+  name: String,
+  section: String,
+  parentProject: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "projects",
+  },
 });
 
 const TaskModel = mongoose.model("tasks", TaskSchema);
+const ProjectModel = mongoose.model("projects", ProjectSchema);
+const SectionTaskModel = mongoose.model("sectionTasks", SectionTaskSchema);
 
 // console.log(TaskModel)
 
 exports.db = db;
 
 exports.TaskModel = TaskModel;
+exports.ProjectModel = ProjectModel;
+exports.SectionTaskModel = SectionTaskModel;

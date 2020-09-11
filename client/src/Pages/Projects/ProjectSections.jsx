@@ -10,6 +10,11 @@ import styled from "styled-components";
 
 import { ReactComponent as MoreOptions } from "../../Assets/Svgs/more_horiz-24px.svg";
 
+import {
+  setSectionTaskSection,
+  deleteSectionTaskAc,
+} from "../../redux/action-creators/project-ac";
+
 const SingleProject = styled.div`
   // border: 1px solid black;
   margin: 1rem 0;
@@ -88,6 +93,9 @@ const ProjectSections = ({
   tasksArray,
   setTaskArrayDD,
   deleteSectionTask,
+  projId,
+  setSectionTaskSection,
+  deleteSectionTaskAc,
 }) => {
   // console.log("Project Sections ", section.value);
 
@@ -95,51 +103,57 @@ const ProjectSections = ({
 
   const [theId, setId] = useState(null);
 
-  
-
   const [parentId, setParentId] = useState(null);
 
   return (
     <Section>
       <Head>
         <HeadInside>
-          <Title> {section.value} : </Title>
+          <Title> {section} : </Title>
           <Number> {tasksArray.length} </Number>
         </HeadInside>
         <MoreOptions />
       </Head>
 
-      <ul>
+      <ul data-section={section}>
         <ReactSortable
           list={tasksArray}
           setList={(list) => {
-            setTaskArrayDD(section.id, list);
+            setTaskArrayDD(section, list);
           }}
           animation="200"
           group="x"
           ghostClass="drag"
           filter="deleteZone"
+          onAdd={(ev) => {
+            setSectionTaskSection(
+              ev.item.dataset.id,
+              ev.to.parentElement.dataset.section
+            );
+            // console.log(ev.from.parentElement.dataset.section);
+          }}
         >
           {tasksArray.map((el) => (
             <SingleProject
               onDragStart={(ev) => {
-                setId(el.id);
-                setParentId(section.id);
+                setId(el._id);
+                setParentId(section);
               }}
               onDragEnd={(ev) => {
                 console.log("dragEnd");
                 if (inn && theId) {
                   console.log("Delete ", theId);
-                  deleteSectionTask(theId, section.id);
+                  deleteSectionTaskAc(theId, section);
                 }
                 setId(null);
                 setParentId(null);
                 setIn(false);
               }}
-              key={el.id}
+              key={el._id}
               parentId={parentId}
+              data-id={el.id}
             >
-              <h4> {el.value} </h4>
+              <h4> {el.name} </h4>
             </SingleProject>
           ))}
         </ReactSortable>
@@ -148,10 +162,10 @@ const ProjectSections = ({
         inn={inn}
         setIn={setIn}
         theId={theId}
-        parentId={section.id}
+        parentId={section}
         pId={parentId}
       />
-      <TheAddBtn id={section.id} secTask="task" text="+ Add Task" />
+      <TheAddBtn section={section} text="+ Add Task" projId={projId} />
     </Section>
   );
 };
@@ -175,11 +189,13 @@ const Del = ({ inn, setIn, theId, parentId, pId }) => {
       <DelBut
         id="deleteZone"
         onDragEnter={(ev) => {
+          console.log("delzone entered ", theId, parentId, pId);
           if (theId && parentId === pId) {
             setIn(true);
           }
         }}
         onDragLeave={(ev) => {
+          console.log("delzone left");
           setIn(false);
         }}
       >
@@ -191,12 +207,16 @@ const Del = ({ inn, setIn, theId, parentId, pId }) => {
 
 export default connect(
   (state, props) => ({
-    tasksArray: state.sectionTasks[props.section.id] || [],
+    tasksArray: state.sectionTasks[props.section] || [],
   }),
   (dispatch) => ({
-    setTaskArrayDD: (id, ar) =>
-      dispatch({ type: "NEW_AR", payload: { id, ar } }),
-    deleteSectionTask: (id, arId) =>
-      dispatch({ type: "DEL_SEC_TASK", payload: { id, arId } }),
+    setTaskArrayDD: (section, list) =>
+      dispatch({ type: "NEW_AR", payload: { section, list } }),
+    deleteSectionTask: (id, section) =>
+      dispatch({ type: "DEL_SEC_TASK", payload: { id, section } }),
+    setSectionTaskSection: (id, section) =>
+      dispatch(setSectionTaskSection(id, section)),
+    deleteSectionTaskAc: (id, section) =>
+      dispatch(deleteSectionTaskAc(id, section)),
   })
 )(ProjectSections);

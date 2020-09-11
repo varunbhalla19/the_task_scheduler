@@ -33,7 +33,7 @@ const arToTasks = (obj, ar) => {
       },
     };
   }, {});
-  console.log("final object is ", finalObj);
+  // console.log("final object is ", finalObj);
   return finalObj;
 };
 

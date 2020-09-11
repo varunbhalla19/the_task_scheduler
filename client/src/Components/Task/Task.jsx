@@ -29,7 +29,7 @@ const TaskContainer = styled.div`
   flex-direction: column;
   position: relative;
   min-height: 110px;
-  background: ${({ color }) => color};
+  background: ${({ color }) => color || "transparent" };
 `;
 const Descp = styled.p`
   color: #333;
