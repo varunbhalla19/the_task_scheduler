@@ -8,6 +8,7 @@ import { ReactComponent as AddTaskButton } from "../../Assets/Svgs/add_circle-24
 import { ShowHideContext } from "../../Context/AddTaskScreen";
 
 import AddTask from "../AddTask/AddTask";
+import { connect } from "react-redux";
 
 // background: darkslateblue;
 const Header = styled.div`
@@ -57,7 +58,7 @@ const AddBut = styled.div`
   border: 1px solid black;
   display: flex;
   align-items: center;
-  padding: 0.25rem 0.4rem 0.25rem 0.6rem ;
+  padding: 0.25rem 0.4rem 0.25rem 0.6rem;
   border-radius: 2rem;
   cursor: pointer;
   p {
@@ -65,27 +66,52 @@ const AddBut = styled.div`
   }
 `;
 
-export default () => {
+const ThemeBut = styled.button`
+  padding: 0.5rem 1rem;
+  background: ${({ theme }) => (theme === "dark" ? "#1f2628" : "")};
+  color: ${({ theme }) => (theme === "dark" ? "#b2becd" : "")};
+  border: none;
+  outline: none;
+  cursor: pointer;
+  border-radius: 1rem;
+  box-shadow: ${({ theme }) =>
+    theme === "dark" ? "none" : " 2px 3px 8px 0px rgba(0,0,0,0.4) "};
+`;
 
-  return (
-    <Header>
-      <div className="head-title">
-        <Heading>Taskly</Heading>
-      </div>
-      <HeadOptions>
-        <HeadOption>
-          <Notifications />
-        </HeadOption>
-        <HeadOption>
-          <TheAddButton />
-        </HeadOption>
-        <HeadPicture>
-          <img src="https://robohash.org/vbss?set=set5" alt="dp"></img>
-        </HeadPicture>
-      </HeadOptions>
-    </Header>
-  );
-};
+const HeaderComponent = ({ theme, switchTheme }) => (
+  <Header>
+    <div className="head-title">
+      <Heading>Taskly</Heading>
+    </div>
+    <HeadOptions>
+      <HeadOption>
+        <ThemeBut theme={theme} onClick={switchTheme}>
+          {" "}
+          Theme : {theme}{" "}
+        </ThemeBut>
+      </HeadOption>
+
+      <HeadOption>
+        <Notifications />
+      </HeadOption>
+      <HeadOption>
+        <TheAddButton />
+      </HeadOption>
+      <HeadPicture>
+        <img src="https://robohash.org/vbss?set=set5" alt="dp"></img>
+      </HeadPicture>
+    </HeadOptions>
+  </Header>
+);
+
+export default connect(
+  (state) => ({
+    theme: state.theme,
+  }),
+  (dispatch) => ({
+    switchTheme: () => dispatch({ type: "THEME_SWITCH" }),
+  })
+)(HeaderComponent);
 
 const TheAddButton = () => {
   const { setComponent } = useContext(ShowHideContext);

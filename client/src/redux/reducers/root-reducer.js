@@ -14,14 +14,8 @@ import weekReducer from "./week-reducer";
 
 import DeleteDropReducer from "./deleteDrop-reducer";
 
-// const projectReducer = (state = [], action) => {};
-
-// const switchReducer = (state = false, { type }) => {
-//   if (type === "CHANGE") {
-//     return !state;
-//   }
-//   return state;
-// };
+const themeReducer = (state = "dark", { type }) =>
+  type === "THEME_SWITCH" ? (state === "light" ? "dark" : "light") : state;
 
 const rootReducer = combineReducers({
   tasks: tasksReducer,
@@ -32,6 +26,7 @@ const rootReducer = combineReducers({
   week: weekReducer,
   inDelete: DeleteDropReducer,
   // switch: switchReducer,
+  theme: themeReducer,
 });
 
 export default rootReducer;

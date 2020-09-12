@@ -12,22 +12,22 @@ const initValues = {
   descp: "",
   color: "",
 };
-const colors = [
-  "#ff9e9e",
-  "#ff9ed2",
-  "#de97f2",
-  "#af97f2",
-  "#97baf2",
-  "#97e0f2",
-  "#97f2c6",
-  "#97f2a1",
-  "#d2f297",
-  "#f1f297",
-  "#f2da97",
-  "#f6d988",
-  "#f6b888",
-  "#f68888",
-];
+const colors = {
+  "#ff9e9e": "#2e1e1e",
+  "#ff9ed2": "#2f1d27",
+  "#de97f2": "#332438",
+  "#af97f2": "#292338",
+  "#97baf2": "#212935",
+  "#97e0f2": "#1c282c",
+  "#97f2c6": "#253c31",
+  "#97f2a1": "#233826",
+  "#d2f297": "#3c442c",
+  "#f1f297": "#40412a",
+  "#f2da97": "#4b442f",
+  "#f6d988": "#3a3422",
+  "#f6b888": "#473629",
+  "#f68888": "#412525",
+};
 
 const styles = {
   width: "24px",
@@ -78,7 +78,7 @@ const AddTask = ({ addTask }) => {
         />
         <div>
           <div> Choose Color (Optional) </div>
-          {colors.map((col) => (
+          {Object.keys(colors).map((col) => (
             <div
               key={col}
               onClick={(ev) => setColor(col)}

@@ -19,7 +19,7 @@ const colorArray = [
   "#cddc39",
   "#ffa000",
   "#ef6c00",
-  "#ff5722"
+  "#ff5722",
 ];
 
 const getColor = () =>
@@ -47,24 +47,29 @@ const DateP = styled.div`
   border: 3px solid
     ${({ hasTasks, isToday }) =>
       isToday ? "transparent" : hasTasks ? getColor() : "transparent"};
-  background: ${({ isToday }) => (isToday ? "#282c34" : "transparent")};
+  background: ${({ isToday, theme }) =>
+    isToday ? (theme === "dark" ? "#151c1e" : "#282c34") : "transparent"};
 `;
 
 const DateH = styled.p`
   color: black;
+
+  // color : #828b97;
 `;
 
-const WeekDay = ({ day, hasTasks, setWeekDay }) => {
+const WeekDay = ({ day, hasTasks, setWeekDay, theme }) => {
   // console.log('day',day)
   return (
     <Day isToday={day.isToday} onClick={() => setWeekDay(day.toDateString())}>
       <WeekName>
         {day.toLocaleDateString(undefined, { weekday: "short" })}
       </WeekName>
-      <DateP isToday={day.isToday} hasTasks={hasTasks}>
+      <DateP isToday={day.isToday} theme={theme} hasTasks={hasTasks}>
         <DateH
           style={{
-            color: `${day.isToday ? "#ddd" : "black"}`,
+            color: `${
+              day.isToday ? "#ddd" : theme === "light" ? "#444" : "#828b97"
+            }`,
           }}
         >
           {day.getDate()}
@@ -75,7 +80,8 @@ const WeekDay = ({ day, hasTasks, setWeekDay }) => {
 };
 
 export default connect(
-  ({ tasks }, { day }) => ({
+  ({ tasks, theme }, { day }) => ({
+    theme,
     hasTasks: tasks[day.toDateString()]
       ? tasks[day.toDateString()].taskList.length === 0
         ? false

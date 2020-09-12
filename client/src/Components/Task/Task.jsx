@@ -22,7 +22,7 @@ import { setPinAc } from "../../redux/action-creators/task-ac";
 // const getColor = () => colors[Math.floor(Math.random() * colors.length)];
 
 const TaskContainer = styled.div`
-  width: 80%;
+  width: 95%;
   padding: 1.5rem 4.5rem 1rem 1.5rem;
   text-align: left;
   cursor: pointer;
@@ -37,18 +37,22 @@ const TaskContainer = styled.div`
   min-height: 110px;
   background: ${({ color }) => color};
 `;
-// background: ${getColor()};
+// background: ${getColor()}; // color: #333;  // color: #b2becd;
+
 const Descp = styled.p`
-  color: #333;
   font-size: 14px;
   margin-top: 0.5rem;
+  color: ${({ theme }) => (theme === "light" ? "#333" : "#b2becd")};
 `;
 
+// color : ${({ theme }) => (theme === "light" ? "#111" : "#828b97")};
 const DateString = styled.h6`
-  color: #111;
+  color: ${({ theme }) => (theme === "light" ? "#111" : "#828b97")};
   font-size: 12px;
   margin-top: 0.5rem;
 `;
+// color: #111;
+// color: #828b97;
 
 const TaskModal = ({ task }) => (
   <div
@@ -76,26 +80,46 @@ const TaskModal = ({ task }) => (
 //   }
 // `;
 
+const colors = {
+  "#ff9e9e": "#2e1e1e",
+  "#ff9ed2": "#2f1d27",
+  "#de97f2": "#332438",
+  "#af97f2": "#292338",
+  "#97baf2": "#212935",
+  "#97e0f2": "#1c282c",
+  "#97f2c6": "#253c31",
+  "#97f2a1": "#233826",
+  "#d2f297": "#3c442c",
+  "#f1f297": "#40412a",
+  "#f2da97": "#4b442f",
+  "#f6d988": "#3a3422",
+  "#f6b888": "#473629",
+  "#f68888": "#412525",
+  transparent: "#4a4a4a",
+};
+
 const absoluteStyle = {
   position: "absolute",
   // top: "0px",
   right: "1rem",
 };
 
-const Tasks = ({ task, todayShow, deleteTask, setPin }) => {
+const Tasks = ({ task, todayShow, deleteTask, setPin, theme }) => {
   const { setComponent } = useContext(ShowHideContext);
   const history = useHistory();
+  // console.log(theme, theme === "light");
   // console.log("PINNED : ", task.pinned);
   return (
     <>
       <TaskContainer
-        color={task.color}
+        color={theme === "light" ? task.color : colors[task.color]}
         // color={getColor()}
       >
         <h3 style={{ marginBottom: "0.5rem" }}>{task.task}</h3>
         {/* <TheInput type="text" placeholder="Edit..." value={task.task} onChange={ev => {}} /> */}
-        <Descp> {task.descp} </Descp>
-        <DateString>
+        <Descp theme={theme}> {task.descp} </Descp>
+
+        <DateString theme={theme}>
           {todayShow
             ? null
             : task.date.toLocaleDateString(undefined, {
@@ -103,6 +127,7 @@ const Tasks = ({ task, todayShow, deleteTask, setPin }) => {
                 month: "short",
               })}
         </DateString>
+
         {!task.isProject ? (
           <>
             <EditSvg
@@ -129,8 +154,8 @@ const Tasks = ({ task, todayShow, deleteTask, setPin }) => {
                 width: "24px",
                 height: "24px",
                 top: "1rem",
-                fill: task.pinned ? "#333333" : "none",
-                stroke: !task.pinned ? "#333333" : "none",
+                fill: task.pinned ? theme === "light" ? "#333333" : "#777777" : "none",
+                stroke: !task.pinned ? theme === "light" ? "#333333" : "#777777" : "none",
                 strokeWidth: !task.pinned ? "1rem" : "none",
               }}
               onClick={(ev) => setPin(task.pinned, task._id)}
@@ -154,7 +179,10 @@ const Tasks = ({ task, todayShow, deleteTask, setPin }) => {
   );
 };
 
-export default connect(null, (dispatch) => ({
-  deleteTask: (id, dateString) => dispatch(deleteTaskAc(id, dateString)),
-  setPin: (pinnedVal, id) => dispatch(setPinAc(id, pinnedVal)),
-}))(Tasks);
+export default connect(
+  ({ theme }) => ({ theme }),
+  (dispatch) => ({
+    deleteTask: (id, dateString) => dispatch(deleteTaskAc(id, dateString)),
+    setPin: (pinnedVal, id) => dispatch(setPinAc(id, pinnedVal)),
+  })
+)(Tasks);

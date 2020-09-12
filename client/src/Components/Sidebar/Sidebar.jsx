@@ -10,11 +10,21 @@ import { ReactComponent as HomeSvg } from "../../Assets/Svgs/home-24px.svg";
 import { ReactComponent as SettingsSvg } from "../../Assets/Svgs/settings-24px.svg";
 import { ReactComponent as CalendarSvg } from "../../Assets/Svgs/calendar.svg";
 import { ReactComponent as PeopleSvg } from "../../Assets/Svgs/people-24px.svg";
+import { connect } from "react-redux";
 
 // width: 5rem;
 const SideBar = styled.div`
-  background-color: #eee;
+  background-color: ${({ theme }) => (theme === "dark" ? "#12181b" : "#ddd")};
+
   height: 100vh;
+
+  & > div > a > div > h6 {
+    color: ${({ theme }) => (theme === "light" ? "#333" : "#b2becd")};
+  }
+
+  & > div > a > div > svg {
+    fill: ${({ theme }) => (theme === "light" ? "112233" : "#cdecde" )};
+  }
 `;
 
 const Options = styled.div`
@@ -54,35 +64,24 @@ const Nav = styled(NavLink)`
       fill: #cdecde;
     }
     h6 {
-      color: #defdef;
+      color: whitesmoke;
     }
   }
 `;
 
 const NavName = styled.h6`
   text-decoration: none;
-  color: #112233;
 `;
 
-export default () => (
-  <SideBar>
-    <Options>
+const SideBarComponent = ({ theme }) => (
+  <SideBar theme={theme}>
+    <Options theme={theme}>
       <Nav exact to="/">
         <Option>
           <NavName> Home </NavName> <HomeSvg />
         </Option>
       </Nav>
 
-      {/* <Nav to="/tasks">
-        <Option>
-          <NavName> Tasks </NavName> <TaskSvg />
-        </Option>
-      </Nav> */}
-      {/* <Nav to="/chat">
-        <Option>
-          <NavName> Chat </NavName> <TextSvg />
-        </Option>
-      </Nav> */}
       <Nav to="/schedule">
         <Option>
           <NavName> Schedule </NavName> <CalendarSvg />
@@ -101,3 +100,17 @@ export default () => (
     </Options>
   </SideBar>
 );
+
+export default connect(({ theme }) => ({ theme }))(SideBarComponent);
+
+/* <Nav to="/tasks">
+        <Option>
+          <NavName> Tasks </NavName> <TaskSvg />
+        </Option>
+      </Nav> */
+
+/* <Nav to="/chat">
+        <Option>
+          <NavName> Chat </NavName> <TextSvg />
+        </Option>
+      </Nav> */

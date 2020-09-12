@@ -5,7 +5,6 @@ import styled from "styled-components";
 import WeekDay from "./WeekDay";
 import { connect } from "react-redux";
 
-
 const Head = styled.div`
   display: flex;
   justify-content: space-between;
@@ -47,6 +46,8 @@ const WeekContainer = styled.div`
   // border: 1px solid blue;
   border-radius: 1rem;
   box-shadow: 0px 3px 10px 0px rgba(0, 0, 0, 0.4);
+
+  background: ${({ theme }) => (theme === "light" ? "transparent" : "#20292c")};
 `;
 
 // const Line = styled.hr`
@@ -65,11 +66,12 @@ const Weekly = ({
   presentWeekDays,
   nextWeekDays,
   month,
+  theme,
 }) => {
   return (
     <div>
       <Head>
-        <Title> Schedule </Title>        
+        <Title> Schedule </Title>
         <HeadContainer>
           <MonthTitle> {month} </MonthTitle>
           <Arrows onClick={(e) => prevWeekDays(week[0])}>{"<"}</Arrows>
@@ -78,7 +80,7 @@ const Weekly = ({
         </HeadContainer>
       </Head>
 
-      <WeekContainer>
+      <WeekContainer theme={theme}>
         {week.map((day) => (
           <WeekDay key={day.toLocaleDateString()} day={day} />
         ))}
@@ -88,9 +90,10 @@ const Weekly = ({
 };
 
 export default connect(
-  ({ week }) => ({
+  ({ week, theme }) => ({
     month: week[6].toLocaleDateString(undefined, { month: "long" }),
     week,
+    theme,
   }),
   (dispatch) => ({
     prevWeekDays: (day) => dispatch({ type: "PREV_WEEK", payload: day }),

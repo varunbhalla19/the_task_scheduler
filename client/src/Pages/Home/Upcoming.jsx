@@ -5,6 +5,7 @@ import Task from "../../Components/Task/Task";
 
 import { Container, Title, TaskContainer } from "./styles";
 
+import { finalUpcoming } from "../../redux/selectors/upcoming";
 
 const UpComing = ({ upComingTasks }) => {
   console.log("Upcoming Tasks ", upComingTasks);
@@ -21,10 +22,6 @@ const UpComing = ({ upComingTasks }) => {
   );
 };
 
-export default connect(({ tasks }) => ({
-  upComingTasks: Object.values(tasks)
-    .filter(({ date, taskList }) => date > new Date())
-    .sort((t1, t2) => (t1.date < t2.date ? -1 : 1))
-    .reduce((ar, taskObj) => [...ar, ...taskObj.taskList], []),
+export default connect((state) => ({
+  upComingTasks: finalUpcoming(state.tasks),
 }))(UpComing);
-

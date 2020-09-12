@@ -8,6 +8,7 @@ import Schedule from "../Schedule/Schedule";
 import Projects from "../Projects/Projects";
 
 import styled from "styled-components";
+import { connect } from "react-redux";
 
 const Main = styled.div`
   flex-grow: 1;
@@ -15,8 +16,17 @@ const Main = styled.div`
   // background: #789789;
   & > div {
     height: 100%;
-    box-shadow: 0px 3px 10px 0px rgba(0, 0, 0, 0.5);
-    background: snow;
+
+    // background: snow;
+
+    background-color: ${({ theme }) =>
+      theme === "light" ? "snow" : "#171e21"};
+
+    box-shadow: ${({ theme }) =>
+      theme === "light" ? "0px 3px 10px 0px rgba(0,0,0,0.4)" : "none"};
+
+    // box-shadow: 0px 2px 10px -5px #0f1315;
+
     border-radius: 2rem;
   }
 `;
@@ -27,8 +37,8 @@ const Main = styled.div`
 
 const Settings = () => <h2>Settings</h2>;
 
-const MainPage = () => (
-  <Main>
+const MainPage = ({ theme }) => (
+  <Main theme={theme}>
     <div>
       <Route path="/" exact component={Home} />
       <Route path="/schedule" component={Schedule} />
@@ -40,4 +50,4 @@ const MainPage = () => (
   </Main>
 );
 
-export default MainPage;
+export default connect(({ theme }) => ({ theme }))(MainPage);

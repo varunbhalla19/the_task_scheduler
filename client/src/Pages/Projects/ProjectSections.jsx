@@ -23,6 +23,10 @@ const SingleProject = styled.div`
   border-radius: 0.5rem;
   box-shadow: 0px 3px 5px 0px rgba(0, 0, 0, 0.4);
 
+  background: ${({ theme }) => (theme === "dark" ? "#1f2628" : "transparent")};
+
+  // background: red;
+
   &.drag {
     background: #bbb;
     box-shadow: none;
@@ -39,6 +43,13 @@ const Section = styled.div`
     border: 1px solid #999;
     cursor: pointer;
     color: #444;
+    background: ${({ theme }) =>
+      theme === "light" ? "whitesmoke" : "#2b3336"};
+    color: ${({ theme }) => (theme === "light" ? "black" : "#b2becd")};
+  }
+
+  & > div #deleteZone {
+    color: ${({ theme }) => (theme === "light" ? "" : "indianred")};
   }
 `;
 
@@ -75,8 +86,9 @@ const Number = styled.span`
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #ddd;
-  color: #777;
+  background: ${({ theme }) => (theme === "dark" ? "#111" : "#ddd")};
+  color: ${({ theme }) => (theme === "dark" ? "#b2becd" : "#777")};
+  // color: ;
 `;
 
 const DelBut = styled.div`
@@ -96,6 +108,7 @@ const ProjectSections = ({
   projId,
   setSectionTaskSection,
   deleteSectionTaskAc,
+  theme,
 }) => {
   // console.log("Project Sections ", section.value);
 
@@ -106,11 +119,11 @@ const ProjectSections = ({
   const [parentId, setParentId] = useState(null);
 
   return (
-    <Section>
+    <Section theme={theme}>
       <Head>
         <HeadInside>
           <Title> {section} : </Title>
-          <Number> {tasksArray.length} </Number>
+          <Number theme={theme}> {tasksArray.length} </Number>
         </HeadInside>
         <MoreOptions />
       </Head>
@@ -135,6 +148,7 @@ const ProjectSections = ({
         >
           {tasksArray.map((el) => (
             <SingleProject
+              theme={theme}
               onDragStart={(ev) => {
                 setId(el._id);
                 setParentId(section);
@@ -208,6 +222,7 @@ const Del = ({ inn, setIn, theId, parentId, pId }) => {
 export default connect(
   (state, props) => ({
     tasksArray: state.sectionTasks[props.section] || [],
+    theme: state.theme,
   }),
   (dispatch) => ({
     setTaskArrayDD: (section, list) =>
