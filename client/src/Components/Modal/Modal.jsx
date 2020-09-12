@@ -18,7 +18,7 @@ const Container = styled.div`
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 11;
-  background: #cde;
+  background: #fff;
   width: 600px;
   height: 400px;
   border-radius: 2rem;

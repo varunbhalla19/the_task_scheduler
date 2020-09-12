@@ -23,9 +23,9 @@ export default () => {
         <Weekly />
         <TaskSheet />
       </div>
-      <div style={{ width: "40%" }}>
+      <>
         <WeeklyPinned />
-      </div>
+      </>
     </div>
   );
 };

@@ -10,14 +10,16 @@ const WeekName = styled.h6`
 `;
 
 const colorArray = [
-  "#e6ee9c",
-  "#aed581",
-  "#81d4fa",
-  "#b39ddb",
-  "#f48fb1",
-  "#ef9a9a",
-  "#a1887f",
-  "#90a4ae",
+  "#e53935",
+  "#8e24aa",
+  "#3f51b5",
+  "#009688",
+  "#0091ea",
+  "#4caf50",
+  "#cddc39",
+  "#ffa000",
+  "#ef6c00",
+  "#ff5722"
 ];
 
 const getColor = () =>
@@ -42,21 +44,24 @@ const DateP = styled.div`
   justify-content: center;
   border-radius: 50%;
   // border: 1px solid black;
-  background: ${({ hasTasks, isToday }) =>
-    isToday ? "#282c34" : hasTasks ? getColor() : "transparent"};
+  border: 3px solid
+    ${({ hasTasks, isToday }) =>
+      isToday ? "transparent" : hasTasks ? getColor() : "transparent"};
+  background: ${({ isToday }) => (isToday ? "#282c34" : "transparent")};
 `;
 
-const DateH = styled.h5`
+const DateH = styled.p`
   color: black;
 `;
 
 const WeekDay = ({ day, hasTasks, setWeekDay }) => {
+  // console.log('day',day)
   return (
     <Day isToday={day.isToday} onClick={() => setWeekDay(day.toDateString())}>
       <WeekName>
         {day.toLocaleDateString(undefined, { weekday: "short" })}
       </WeekName>
-      <DateP isToday={day.isToday} hasTasks={hasTasks} isToday={day.isToday}>
+      <DateP isToday={day.isToday} hasTasks={hasTasks}>
         <DateH
           style={{
             color: `${day.isToday ? "#ddd" : "black"}`,

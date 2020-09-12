@@ -13,7 +13,7 @@ import { fetchProjectAc } from "../../redux/action-creators/project-ac";
 
 const Container = styled.div`
   height: 100%;
-  background: indianred;
+  // background: indianred;
   border-radius: 2rem;
   padding: 1rem;
   display: flex;

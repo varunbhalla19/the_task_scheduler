@@ -1,11 +1,11 @@
-const initProj = [
-  {
-    projectName: "Abc Xyz",
-    _id: "7288288",
-    datefrom: new Date(2020, 8, 9),
-    dateto: new Date(2020, 8, 20),
-  },
-];
+// const initProj = [
+//   {
+//     projectName: "Abc Xyz",
+//     _id: "7288288",
+//     datefrom: new Date(2020, 8, 9),
+//     dateto: new Date(2020, 8, 20),
+//   },
+// ];
 
 // {
 //   ...projects,
@@ -14,62 +14,62 @@ const initProj = [
 //   ]
 // }
 
-const initSectionTasks = {
-  Done: [
-    {
-      id: "7288288959",
-      value: "Task A a",
-    },
-    {
-      id: "6288288959",
-      value: "Task A b",
-    },
-    {
-      id: "5288288959",
-      value: "Task A c",
-    },
-    {
-      id: "052882889590",
-      value: "Task A d",
-    },
-  ],
-  "In Progress": [
-    {
-      id: "7278288959",
-      value: "Task B a",
-    },
-    {
-      id: "6368288959",
-      value: "Task B b",
-    },
-    {
-      id: "5458288959",
-      value: "Task B c",
-    },
-  ],
-  UpComing: [
-    {
-      id: "72088388959",
-      value: "Task C a",
-    },
-    {
-      id: "62188488959",
-      value: "Task C b",
-    },
-    {
-      id: "52288588959",
-      value: "Task C c",
-    },
-    {
-      id: "42288588959",
-      value: "Task C d",
-    },
-    {
-      id: "32288588959",
-      value: "Task C e",
-    },
-  ],
-};
+// const initSectionTasks = {
+//   Done: [
+//     {
+//       id: "7288288959",
+//       value: "Task A a",
+//     },
+//     {
+//       id: "6288288959",
+//       value: "Task A b",
+//     },
+//     {
+//       id: "5288288959",
+//       value: "Task A c",
+//     },
+//     {
+//       id: "052882889590",
+//       value: "Task A d",
+//     },
+//   ],
+//   "In Progress": [
+//     {
+//       id: "7278288959",
+//       value: "Task B a",
+//     },
+//     {
+//       id: "6368288959",
+//       value: "Task B b",
+//     },
+//     {
+//       id: "5458288959",
+//       value: "Task B c",
+//     },
+//   ],
+//   UpComing: [
+//     {
+//       id: "72088388959",
+//       value: "Task C a",
+//     },
+//     {
+//       id: "62188488959",
+//       value: "Task C b",
+//     },
+//     {
+//       id: "52288588959",
+//       value: "Task C c",
+//     },
+//     {
+//       id: "42288588959",
+//       value: "Task C d",
+//     },
+//     {
+//       id: "32288588959",
+//       value: "Task C e",
+//     },
+//   ],
+// };
 
 const projectReducer = (state = [], action) => {
   switch (action.type) {

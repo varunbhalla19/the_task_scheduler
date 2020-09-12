@@ -12,9 +12,8 @@ const Cover = styled.div`
   flex-grow: 1;
   // height : 10px;
   // background : slateblue;
-  display : flex;
-  flex-direction : column;
-
+  display: flex;
+  flex-direction: column;
 `;
 
 const TaskS = styled.div`
@@ -35,16 +34,8 @@ const TaskSheet = ({ weekDay, taskList }) => {
 
   return (
     <Cover>
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-        }}
-      >
-        <h4>{weekDay}</h4>
-        <h4> {weekDay === new Date().toDateString() ? "Today" : null} </h4>
-        <div style={{ width: "60px" }}></div>
+      <div>
+        <h4> {weekDay === new Date().toDateString() ? "Today" : weekDay} </h4>
       </div>
       {
         <TaskS>

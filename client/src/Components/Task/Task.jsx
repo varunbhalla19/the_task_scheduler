@@ -19,9 +19,11 @@ import { Link, useHistory } from "react-router-dom";
 
 import { setPinAc } from "../../redux/action-creators/task-ac";
 
+// const getColor = () => colors[Math.floor(Math.random() * colors.length)];
+
 const TaskContainer = styled.div`
   width: 80%;
-  padding: 1.5rem 3rem 1rem 1.5rem;
+  padding: 1.5rem 4.5rem 1rem 1.5rem;
   text-align: left;
   cursor: pointer;
   border-radius: 1rem;
@@ -33,8 +35,9 @@ const TaskContainer = styled.div`
   flex-direction: column;
   position: relative;
   min-height: 110px;
-  background: ${({ color }) => color || "transparent"};
+  background: ${({ color }) => color};
 `;
+// background: ${getColor()};
 const Descp = styled.p`
   color: #333;
   font-size: 14px;
@@ -61,6 +64,18 @@ const TaskModal = ({ task }) => (
   </div>
 );
 
+// const TheInput = styled.input`
+//   padding: 0.3rem 0.6rem;
+//   border: 1px solid #777;
+//   outline: none;
+//   width: 90%;
+//   border-radius: 0.5rem;
+//   &:focus {
+//     // border: none;
+//     outline: none;
+//   }
+// `;
+
 const absoluteStyle = {
   position: "absolute",
   // top: "0px",
@@ -73,8 +88,12 @@ const Tasks = ({ task, todayShow, deleteTask, setPin }) => {
   // console.log("PINNED : ", task.pinned);
   return (
     <>
-      <TaskContainer color={task.color}>
+      <TaskContainer
+        color={task.color}
+        // color={getColor()}
+      >
         <h3 style={{ marginBottom: "0.5rem" }}>{task.task}</h3>
+        {/* <TheInput type="text" placeholder="Edit..." value={task.task} onChange={ev => {}} /> */}
         <Descp> {task.descp} </Descp>
         <DateString>
           {todayShow
@@ -96,7 +115,7 @@ const Tasks = ({ task, todayShow, deleteTask, setPin }) => {
               }}
             />
             <DeleteSvg
-              onClick={() => deleteTask(task._id, task.pinned)}
+              onClick={() => deleteTask(task._id, task.dateString)}
               style={{
                 ...absoluteStyle,
                 bottom: "1rem",

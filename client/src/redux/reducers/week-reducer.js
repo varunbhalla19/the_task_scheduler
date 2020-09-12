@@ -9,9 +9,10 @@ Date.setDateNum = (date, num) => {
 
 Date.getFirstWeekSunday = () => {
   let d = new Date();
-  let day = d.getDay();
-  d.setDate(d.getDate() - day);
-  return d;
+  let d2 = new Date(d.getFullYear(), d.getMonth(), d.getDate());
+  let day = d2.getDay();
+  d2.setDate(d2.getDate() - day);
+  return d2;
 };
 
 const getInitWeekDays = () => {

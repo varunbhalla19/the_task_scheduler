@@ -19,7 +19,7 @@ const ProjectsShow = styled.div`
 
 const Project = styled.div`
   padding: 1rem;
-  background: whitesmoke;
+  // background: whitesmoke;
   box-shadow: 2px 3px 10px 0px rgba(0, 0, 0, 0.6);
   border-radius: 2rem;
   width: 100%;

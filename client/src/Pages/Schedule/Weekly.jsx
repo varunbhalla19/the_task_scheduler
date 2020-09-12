@@ -45,7 +45,7 @@ const WeekContainer = styled.div`
   align-items: center;
   justify-content: space-around;
   // border: 1px solid blue;
-  border-radius: 4rem;
+  border-radius: 1rem;
   box-shadow: 0px 3px 10px 0px rgba(0, 0, 0, 0.4);
 `;
 

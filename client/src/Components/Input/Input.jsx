@@ -3,7 +3,7 @@ import React from "react";
 import styled from "styled-components";
 
 const InputCover = styled.div`
-  margin: 1rem auto;
+  margin: 0.5rem auto;
   padding: 1rem;
   width: 70%;
   input {
@@ -11,7 +11,7 @@ const InputCover = styled.div`
     padding: 0.5rem 1rem;
     border-radius: 0.5rem;
     outline: none;
-    border: none;
+    border: 1px solid black;
   }
 `;
 

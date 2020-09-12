@@ -153,7 +153,7 @@ const ProjectSections = ({
               parentId={parentId}
               data-id={el.id}
             >
-              <h4> {el.name} </h4>
+              <p> {el.name} </p>
             </SingleProject>
           ))}
         </ReactSortable>

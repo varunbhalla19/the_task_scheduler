@@ -24,17 +24,16 @@ h6 {
   cursor: grab;
 } */
 
-
 *::-webkit-scrollbar {
-  width: 0;               /* width of the entire scrollbar */
+  width: 0; /* width of the entire scrollbar */
 }
 *::-webkit-scrollbar-track {
-  background: orange;        /* color of the tracking area */
+  background: orange; /* color of the tracking area */
 }
 *::-webkit-scrollbar-thumb {
-  background-color: blue;    /* color of the scroll thumb */
-  border-radius: 20px;       /* roundness of the scroll thumb */
-  border: 3px solid orange;  /* creates padding around scroll thumb */
+  background-color: blue; /* color of the scroll thumb */
+  border-radius: 20px; /* roundness of the scroll thumb */
+  border: 3px solid orange; /* creates padding around scroll thumb */
 }
 
 /* https://alligator.io/css/css-scrollbars/ */

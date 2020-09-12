@@ -14,7 +14,7 @@ const TaskSchema = new mongoose.Schema({
   dateString: String,
   descp: String,
   pinned: Boolean,
-  // color: String,
+  color: String,
 });
 
 const ProjectSchema = new mongoose.Schema({
