@@ -27,7 +27,7 @@ const AddTask = ({ addTask }) => {
         onSubmit={(ev) => {
           ev.preventDefault();
           values["dateString"] = values.date.toDateString();
-          addTask({ ...values });
+          addTask({ ...values, pinned: false });
           // resetform();
         }}
       >

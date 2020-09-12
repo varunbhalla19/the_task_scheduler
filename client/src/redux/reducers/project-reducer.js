@@ -91,7 +91,7 @@ const sectionsReducer = (state = initSections, action) => {
 const fetchedSectionTasks = (secTaskArr, projId) => {
   // console.log(secTaskArr, projId);
   return initSections.reduce((ac, el) => {
-    return { ...ac, [el]: secTaskArr.filter((st) => st.section == el) };
+    return { ...ac, [el]: secTaskArr.filter((st) => st.section === el) };
   }, {});
 };
 

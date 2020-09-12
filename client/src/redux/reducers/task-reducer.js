@@ -37,6 +37,14 @@ const arToTasks = (obj, ar) => {
   return finalObj;
 };
 
+const setPinTask = (ar, id) =>
+  ar.map((el) => {
+    if (el._id === id) {
+      return { ...el, pinned: !el.pinned };
+    }
+    return el;
+  });
+
 export default (state = {}, { type, payload }) => {
   switch (type) {
     case "FETCHED_TASK":
@@ -44,6 +52,7 @@ export default (state = {}, { type, payload }) => {
     case "ADD_TASK":
       return addTask(state, payload);
     case "DELETE_TASK":
+      console.log("taskAr before deleting ", state);
       return {
         ...state,
         [payload.dateString]: {
@@ -51,6 +60,16 @@ export default (state = {}, { type, payload }) => {
           taskList: deleteTask(payload.id, state[payload.dateString].taskList),
         },
       };
+    case "SET_PIN":
+      return {
+        ...state,
+        [payload.dateString]: {
+          ...state[payload.dateString],
+          taskList: setPinTask(state[payload.dateString].taskList, payload.id),
+        },
+      };
+
+    // return state;
     default:
       return state;
   }

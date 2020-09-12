@@ -8,6 +8,6 @@ import rootReducer from "./reducers/root-reducer";
 
 // const rootReducer = combineReducers({});
 
-const store = createStore(rootReducer, applyMiddleware(thunk, logger));
+const store = createStore(rootReducer, applyMiddleware( thunk,logger));
 
 export default store;

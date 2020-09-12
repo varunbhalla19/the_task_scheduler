@@ -8,9 +8,7 @@ import { connect } from "react-redux";
 Date.getToday = new Date().toDateString();
 
 const Today = ({ todayTask }) => {
-  // const { todayTask } = useContext(TaskContext);
-
-  console.log("Today Component");
+  // const  = useContext(TaskContext);
 
   return (
     <Container>

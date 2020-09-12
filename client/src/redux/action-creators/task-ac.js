@@ -1,5 +1,5 @@
 const addTaskAc = (task) => (dispatch) => {
-  console.log("addTaskAc called");
+  console.log("addTaskAc called ", task);
   fetch("/tasks", {
     method: "POST",
     body: JSON.stringify(task),
@@ -40,4 +40,24 @@ const deleteTaskAc = (id, dateString) => (dispatch) => {
     });
 };
 
-export { addTaskAc, fetchTaskAc, deleteTaskAc };
+const setPinAc = (id, pinnedVal) => (dispatch) => {
+  console.log("setPinAc ", id, pinnedVal);
+  fetch("/taskspin", {
+    method: "PUT",
+    body: JSON.stringify({
+      id,
+      pinnedVal,
+    }),
+    headers: { "content-type": "application/json" },
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      console.log("Pinned Task ", data);
+      dispatch({
+        type: "SET_PIN",
+        payload: { dateString: data.dateString, id: data._id },
+      });
+    });
+};
+
+export { addTaskAc, fetchTaskAc, deleteTaskAc, setPinAc };

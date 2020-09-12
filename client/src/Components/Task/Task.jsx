@@ -8,12 +8,16 @@ import { ReactComponent as DeleteSvg } from "../../Assets/Svgs/delete.svg";
 
 import { ReactComponent as MoreSvg } from "../../Assets/Svgs/more_arrow.svg";
 
+import { ReactComponent as PinSvg } from "../../Assets/Svgs/pushpin.svg";
+
 // import ModalHoc from "../Modal/ModalHoc";
 
 import { deleteTaskAc } from "../../redux/action-creators/task-ac";
 
 import { ShowHideContext } from "../../Context/AddTaskScreen";
 import { Link, useHistory } from "react-router-dom";
+
+import { setPinAc } from "../../redux/action-creators/task-ac";
 
 const TaskContainer = styled.div`
   width: 80%;
@@ -29,7 +33,7 @@ const TaskContainer = styled.div`
   flex-direction: column;
   position: relative;
   min-height: 110px;
-  background: ${({ color }) => color || "transparent" };
+  background: ${({ color }) => color || "transparent"};
 `;
 const Descp = styled.p`
   color: #333;
@@ -63,13 +67,14 @@ const absoluteStyle = {
   right: "1rem",
 };
 
-const Tasks = ({ task, todayShow, deleteTask }) => {
+const Tasks = ({ task, todayShow, deleteTask, setPin }) => {
   const { setComponent } = useContext(ShowHideContext);
   const history = useHistory();
+  // console.log("PINNED : ", task.pinned);
   return (
     <>
       <TaskContainer color={task.color}>
-        <h3 style={{ marginBottom: "0.5rem" }}> {task.task} </h3>
+        <h3 style={{ marginBottom: "0.5rem" }}>{task.task}</h3>
         <Descp> {task.descp} </Descp>
         <DateString>
           {todayShow
@@ -85,17 +90,31 @@ const Tasks = ({ task, todayShow, deleteTask }) => {
               onClick={() => setComponent(<TaskModal task={task} />)}
               style={{
                 ...absoluteStyle,
-                top: "1rem",
+                bottom: "1rem",
+                right: "3rem",
                 fill: "slateblue",
               }}
             />
             <DeleteSvg
-              onClick={() => deleteTask(task._id, task.dateString)}
+              onClick={() => deleteTask(task._id, task.pinned)}
               style={{
                 ...absoluteStyle,
                 bottom: "1rem",
                 fill: "indianred",
               }}
+            />
+
+            <PinSvg
+              style={{
+                ...absoluteStyle,
+                width: "24px",
+                height: "24px",
+                top: "1rem",
+                fill: task.pinned ? "#333333" : "none",
+                stroke: !task.pinned ? "#333333" : "none",
+                strokeWidth: !task.pinned ? "1rem" : "none",
+              }}
+              onClick={(ev) => setPin(task.pinned, task._id)}
             />
           </>
         ) : (
@@ -118,4 +137,5 @@ const Tasks = ({ task, todayShow, deleteTask }) => {
 
 export default connect(null, (dispatch) => ({
   deleteTask: (id, dateString) => dispatch(deleteTaskAc(id, dateString)),
+  setPin: (pinnedVal, id) => dispatch(setPinAc(id, pinnedVal)),
 }))(Tasks);

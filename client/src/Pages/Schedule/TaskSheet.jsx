@@ -8,20 +8,26 @@ import { connect } from "react-redux";
 import styled from "styled-components";
 
 const Cover = styled.div`
-  padding: 1rem 3rem;
-  display: flex;
-  flex-direction: column;
+  padding: 1rem 1.5rem;
   flex-grow: 1;
+  // height : 10px;
+  // background : slateblue;
+  display : flex;
+  flex-direction : column;
+
 `;
 
 const TaskS = styled.div`
   flex-grow: 1;
   // background: darkslateblue;
-  width: 80%;
+  width: 100%;
   margin: auto;
   padding: 1rem;
   height: 0px;
   overflow: auto;
+  div {
+    width: 100%;
+  }
 `;
 
 const TaskSheet = ({ weekDay, taskList }) => {

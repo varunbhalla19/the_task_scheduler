@@ -36,18 +36,21 @@ db.once("open", function () {
 });
 
 app.post("/tasks", (req, res) => {
-  console.log(req.body);
+  console.log("/POST tasks got : ", req.body);
 
-  const task = new TaskModel({
-    task: req.body.task,
-    descp: req.body.descp,
-    date: req.body.date,
-    dateString: req.body.dateString,
-  });
+  // const task = new TaskModel({
+  //   task: req.body.task,
+  //   descp: req.body.descp,
+  //   date: req.body.date,
+  //   dateString: req.body.dateString,
+  //   pinned: req.body.pinned,
+  // });
+
+  const task = new TaskModel(req.body);
 
   task.save().then((data) => {
     console.log("data saved is ", data);
-    console.log(data.id, data._id);
+    // console.log(data.id, data._id);
 
     res.status(200).send({ ...data._doc, id: data.id });
   });
@@ -70,6 +73,17 @@ app.delete("/tasks/:taskId", (req, res) => {
       msg: "Deleted!",
     });
   });
+});
+
+app.put("/taskspin", (req, res) => {
+  const { pinnedVal, id } = req.body;
+  console.log("/taskpin ", pinnedVal, id);
+  TaskModel.findByIdAndUpdate(id, { pinned: !pinnedVal }, { new: true }).then(
+    (data) => {
+      console.log("pinned task saved ", data);
+      res.status(200).send(data);
+    }
+  );
 });
 
 app.get("/project", (req, res) => {

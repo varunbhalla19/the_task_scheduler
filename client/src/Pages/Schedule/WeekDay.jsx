@@ -4,9 +4,9 @@ import styled from "styled-components";
 
 import { connect } from "react-redux";
 
-const WeekName = styled.div`
+const WeekName = styled.h6`
   margin-bottom: 0.5rem;
-  font-size: 12px;
+  // font-size: 12px;
 `;
 
 const colorArray = [
@@ -26,44 +26,44 @@ const getColor = () =>
 const Day = styled.div`
   cursor: pointer;
   margin: 0 0.5rem;
-  width: 70px;
-  height: 70px;
 
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  border-radius: 50%;
+  // border-radius: 50%;
+`;
 
+const DateP = styled.div`
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  // border: 1px solid black;
   background: ${({ hasTasks, isToday }) =>
     isToday ? "#282c34" : hasTasks ? getColor() : "transparent"};
 `;
 
-const DateP = styled.h4`
+const DateH = styled.h5`
   color: black;
 `;
 
 const WeekDay = ({ day, hasTasks, setWeekDay }) => {
   return (
-    <Day
-      isToday={day.isToday}
-      style={{
-        color: `${day.isToday ? "#ddd" : "black"}`,
-      }}
-      hasTasks={hasTasks}
-      onClick={() => setWeekDay(day.toDateString())}
-    >
+    <Day isToday={day.isToday} onClick={() => setWeekDay(day.toDateString())}>
       <WeekName>
         {day.toLocaleDateString(undefined, { weekday: "short" })}
       </WeekName>
-      <DateP
-        isToday={day.isToday}
-        hasTasks={hasTasks}
-        style={{
-          color: `${day.isToday ? "#ddd" : "black"}`,
-        }}
-      >
-        {day.getDate()}
+      <DateP isToday={day.isToday} hasTasks={hasTasks} isToday={day.isToday}>
+        <DateH
+          style={{
+            color: `${day.isToday ? "#ddd" : "black"}`,
+          }}
+        >
+          {day.getDate()}
+        </DateH>
       </DateP>
     </Day>
   );

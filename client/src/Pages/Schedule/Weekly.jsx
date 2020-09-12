@@ -5,11 +5,12 @@ import styled from "styled-components";
 import WeekDay from "./WeekDay";
 import { connect } from "react-redux";
 
+
 const Head = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding : 1rem 3rem ;
+  padding: 1rem 3rem;
 `;
 
 const HeadContainer = styled.div`
@@ -37,15 +38,15 @@ const MonthTitle = styled.h3`
 `;
 
 const WeekContainer = styled.div`
-  width: 70%;
-  padding: 0 1.5rem;
+  width: 80%;
+  padding: 1rem 1.5rem;
   margin: 0.5rem auto;
   display: flex;
   align-items: center;
   justify-content: space-around;
   // border: 1px solid blue;
-  border-radius : 4rem;
-  box-shadow : 0px 3px 10px 0px rgba(0,0,0,0.4);
+  border-radius: 4rem;
+  box-shadow: 0px 3px 10px 0px rgba(0, 0, 0, 0.4);
 `;
 
 // const Line = styled.hr`
@@ -68,7 +69,7 @@ const Weekly = ({
   return (
     <div>
       <Head>
-        <Title> Schedule </Title>
+        <Title> Schedule </Title>        
         <HeadContainer>
           <MonthTitle> {month} </MonthTitle>
           <Arrows onClick={(e) => prevWeekDays(week[0])}>{"<"}</Arrows>
