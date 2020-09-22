@@ -1,11 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 
 import styled from "styled-components";
 
-// import { TaskContext } from "../../Context/TaskProvider";
-
 import Today from "./Today";
 import UpComing from "./Upcoming";
+import Overdue from "./Overdue";
+
+import { TitleButtons } from "./styles";
 
 Date.isToday = (date) => date.toDateString() === new Date().toDateString();
 
@@ -21,21 +22,53 @@ const HomeContainer = styled.div`
   justify-content: space-around;
   // background: darkslateblue;
   flex-grow: 1;
-  border-radius: 2rem;
+  border-radius: 1rem;
+
+  @media (max-width: 600px) {
+    padding: 0;
+  }
 `;
 
-const Title = styled.h2`
-  margin: 0.5rem 0;
-  padding: 0.5rem;
-`;
+const getSelectedComponent = (mode) => {
+  switch (mode) {
+    case "O":
+      return <Overdue />;
+    case "U":
+      return <UpComing />;
+    case "T":
+      return <Today />;
 
-export default () => (
-  <Container>
-    <Title> Home </Title>
+    default:
+      return null;
+  }
+};
 
-    <HomeContainer>
-      <Today />
-      <UpComing />
-    </HomeContainer>
-  </Container>
-);
+export default () => {
+  const [mode, setMode] = useState("T");
+
+  return (
+    <Container>
+      <ComponentSwitch setMode={setMode} mode={mode} />
+
+      <HomeContainer>{getSelectedComponent(mode)}</HomeContainer>
+
+      {/* <HomeContainer>{mode === "T" ? <Today /> : <UpComing />}</HomeContainer> */}
+    </Container>
+  );
+};
+
+const ComponentSwitch = ({ mode, setMode }) => {
+  return (
+    <div style={{ display: "flex", justifyContent: "space-around" }}>
+      <TitleButtons onClick={(ev) => setMode("T")} selected={mode === "T"}>
+        Today
+      </TitleButtons>
+      <TitleButtons onClick={(ev) => setMode("O")} selected={mode === "O"}>
+        Overdue
+      </TitleButtons>
+      <TitleButtons onClick={(ev) => setMode("U")} selected={mode === "U"}>
+        Upcoming
+      </TitleButtons>
+    </div>
+  );
+};

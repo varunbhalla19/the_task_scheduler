@@ -21,7 +21,7 @@ const addTask = (tasks, task) => {
 const deleteTask = (id, ar) => ar.filter((el) => el._id !== id);
 
 const arToTasks = (obj, ar) => {
-  console.log("ar got => ", ar);
+  // console.log("ar got => ", ar);
 
   const finalObj = ar.reduce((ob, el) => {
     el.date = new Date(el.date);

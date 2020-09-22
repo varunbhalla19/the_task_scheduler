@@ -9,30 +9,33 @@ import Header from "./Components/Header/Header";
 import Sidebar from "./Components/Sidebar/Sidebar";
 import Showcase from "./Components/Showcase/Showcase";
 import Main from "./Pages/Main/Main";
-import Modal from "./Components/Modal/Modal";
 
-function App({ fetchTasks }) {
+function App({ fetchTasks, theme }) {
   useEffect(() => {
     fetchTasks();
   }, [fetchTasks]);
 
   return (
-    <div className="App">
-      <Sidebar />
+    <div
+      style={{
+        backgroundColor: theme === "light" ? "#ddd" : "#12181b",
+      }}
+      className="App"
+    >
+      <Header />
       <Showcase>
-        <Header />
+        <Sidebar />
         <Main />
       </Showcase>
-
-      <Modal />
     </div>
   );
 }
 
-export default connect(null, (dispatch) => ({
-  fetchTasks: () => dispatch(fetchTaskAc()),
-}))(App);
+export default connect(
+  (state) => ({ theme: state.theme }),
+  (dispatch) => ({
+    fetchTasks: () => dispatch(fetchTaskAc()),
+  })
+)(App);
 
 //  Sortable => https://codesandbox.io/s/practical-lehmann-lezmu?file=/src/App.js
-
-// const colorArray = ["#f09495", "#f0ea94", "#94f0e5", "#a394f0", "#b4f094"];

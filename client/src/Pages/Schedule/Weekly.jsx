@@ -39,6 +39,12 @@ const MonthTitle = styled.h3`
 const WeekContainer = styled.div`
   width: 80%;
   padding: 1rem 1.5rem;
+
+  @media( max-width : 600px ){
+    width : 95%;
+    padding : 1rem 0.5rem;
+  }
+
   margin: 0.5rem auto;
   display: flex;
   align-items: center;
@@ -57,7 +63,9 @@ const WeekContainer = styled.div`
 // `;
 
 const Title = styled.h2`
-  // padding: 1rem;
+  @media (max-width: 650px) {
+    display: none;
+  }
 `;
 
 const Weekly = ({

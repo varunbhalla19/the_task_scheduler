@@ -1,33 +1,24 @@
-import React, { useContext } from "react";
+import React from "react";
 import styled from "styled-components";
 
 import { connect } from "react-redux";
 
 import { ReactComponent as EditSvg } from "../../Assets/Svgs/edit.svg";
 import { ReactComponent as DeleteSvg } from "../../Assets/Svgs/delete.svg";
-
 import { ReactComponent as MoreSvg } from "../../Assets/Svgs/more_arrow.svg";
-
 import { ReactComponent as PinSvg } from "../../Assets/Svgs/pushpin.svg";
 
-// import ModalHoc from "../Modal/ModalHoc";
-
 import { deleteTaskAc } from "../../redux/action-creators/task-ac";
-
-import { ShowHideContext } from "../../Context/AddTaskScreen";
-import { Link, useHistory } from "react-router-dom";
-
+import { useHistory } from "react-router-dom";
 import { setPinAc } from "../../redux/action-creators/task-ac";
 
-// const getColor = () => colors[Math.floor(Math.random() * colors.length)];
-
 const TaskContainer = styled.div`
-  width: 95%;
+  width: 90%;
   padding: 1.5rem 4.5rem 1rem 1.5rem;
   text-align: left;
   cursor: pointer;
   border-radius: 1rem;
-  box-shadow: 0 2px 8px 1px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 2px 8px 1px rgba(0, 0, 0, 0.4);
   margin: 0.5rem auto;
   display: flex;
   // align-items: center;
@@ -36,49 +27,40 @@ const TaskContainer = styled.div`
   position: relative;
   min-height: 110px;
   background: ${({ color }) => color};
+
+  @media (min-width: 700px) {
+    width: 75%;
+  }
+
+  @media (max-width: 450px) {
+    width: 95%;
+  }
+
 `;
-// background: ${getColor()}; // color: #333;  // color: #b2becd;
 
 const Descp = styled.p`
   font-size: 14px;
   margin-top: 0.5rem;
   color: ${({ theme }) => (theme === "light" ? "#333" : "#b2becd")};
+
+  @media (max-width: 600px) {
+    font-size: 0.8rem;
+  }
 `;
 
-// color : ${({ theme }) => (theme === "light" ? "#111" : "#828b97")};
 const DateString = styled.h6`
   color: ${({ theme }) => (theme === "light" ? "#111" : "#828b97")};
   font-size: 12px;
   margin-top: 0.5rem;
 `;
-// color: #111;
-// color: #828b97;
 
-const TaskModal = ({ task }) => (
-  <div
-    style={{
-      height: "100%",
-      background: "whitesmoke",
-      color: "#444",
-      borderRadius: "2rem",
-    }}
-  >
-    {task.task}
-    {task.isProject ? <Link to={`/groups/${task.link}`}> Visit </Link> : null}
-  </div>
-);
+const TaskTitle = styled.h3`
+  margin-bottom: 0.5rem;
 
-// const TheInput = styled.input`
-//   padding: 0.3rem 0.6rem;
-//   border: 1px solid #777;
-//   outline: none;
-//   width: 90%;
-//   border-radius: 0.5rem;
-//   &:focus {
-//     // border: none;
-//     outline: none;
-//   }
-// `;
+  @media (max-width: 600px) {
+    font-size: 1rem;
+  }
+`;
 
 const colors = {
   "#ff9e9e": "#2e1e1e",
@@ -105,18 +87,14 @@ const absoluteStyle = {
 };
 
 const Tasks = ({ task, todayShow, deleteTask, setPin, theme }) => {
-  const { setComponent } = useContext(ShowHideContext);
   const history = useHistory();
-  // console.log(theme, theme === "light");
-  // console.log("PINNED : ", task.pinned);
+
   return (
     <>
       <TaskContainer
         color={theme === "light" ? task.color : colors[task.color]}
-        // color={getColor()}
       >
-        <h3 style={{ marginBottom: "0.5rem" }}>{task.task}</h3>
-        {/* <TheInput type="text" placeholder="Edit..." value={task.task} onChange={ev => {}} /> */}
+        <TaskTitle>{task.task}</TaskTitle>
         <Descp theme={theme}> {task.descp} </Descp>
 
         <DateString theme={theme}>
@@ -131,7 +109,7 @@ const Tasks = ({ task, todayShow, deleteTask, setPin, theme }) => {
         {!task.isProject ? (
           <>
             <EditSvg
-              onClick={() => setComponent(<TaskModal task={task} />)}
+              // onClick={() => setComponent(<TaskModal task={task} />)}
               style={{
                 ...absoluteStyle,
                 bottom: "1rem",
@@ -154,8 +132,16 @@ const Tasks = ({ task, todayShow, deleteTask, setPin, theme }) => {
                 width: "24px",
                 height: "24px",
                 top: "1rem",
-                fill: task.pinned ? theme === "light" ? "#333333" : "#777777" : "none",
-                stroke: !task.pinned ? theme === "light" ? "#333333" : "#777777" : "none",
+                fill: task.pinned
+                  ? theme === "light"
+                    ? "#333333"
+                    : "#777777"
+                  : "none",
+                stroke: !task.pinned
+                  ? theme === "light"
+                    ? "#333333"
+                    : "#777777"
+                  : "none",
                 strokeWidth: !task.pinned ? "1rem" : "none",
               }}
               onClick={(ev) => setPin(task.pinned, task._id)}

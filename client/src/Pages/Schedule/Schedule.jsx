@@ -5,7 +5,6 @@ import React from "react";
 import Weekly from "./Weekly";
 
 import TaskSheet from "./TaskSheet";
-import WeeklyPinned from "./WeeklyPinned";
 
 export default () => {
   console.log("Schedule Component");
@@ -14,7 +13,6 @@ export default () => {
     <div style={{ display: "flex", height: "100%" }}>
       <div
         style={{
-          width: "60%",
           display: "flex",
           flexDirection: "column",
           flexGrow: "1",
@@ -23,9 +21,6 @@ export default () => {
         <Weekly />
         <TaskSheet />
       </div>
-      <>
-        <WeeklyPinned />
-      </>
     </div>
   );
 };

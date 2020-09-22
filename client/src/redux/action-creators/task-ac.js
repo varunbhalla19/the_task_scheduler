@@ -42,7 +42,7 @@ const deleteTaskAc = (id, dateString) => (dispatch) => {
 
 const setPinAc = (id, pinnedVal) => (dispatch) => {
   console.log("setPinAc ", id, pinnedVal);
-  fetch("/taskspin", {
+  fetch("/tasks/pin", {
     method: "PUT",
     body: JSON.stringify({
       id,

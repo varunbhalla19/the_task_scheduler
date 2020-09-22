@@ -16,7 +16,19 @@ const finalUpcoming = createSelector([upcomingSorted], (upcomingSorted) =>
   upcomingSorted.reduce((ar, taskObj) => [...ar, ...taskObj.taskList], [])
 );
 
-export { finalUpcoming };
+const overdueFiltered = createSelector([objectTasks], (objectTasks) =>
+  objectTasks.filter(({ date, taskList }) => date < new Date())
+);
+
+const overdueSorted = createSelector([overdueFiltered], (overdueFiltered) =>
+  overdueFiltered.sort((t1, t2) => (t1.date < t2.date ? -1 : 1))
+);
+
+const finalOverdue = createSelector([overdueSorted], (overdueSorted) =>
+  overdueSorted.reduce((ar, taskObj) => [...ar, ...taskObj.taskList], [])
+);
+
+export { finalUpcoming, finalOverdue };
 
 // Object.values(tasks)
 //   .filter(({ date, taskList }) => date > new Date())

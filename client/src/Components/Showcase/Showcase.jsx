@@ -5,10 +5,9 @@ import { connect } from "react-redux";
 
 const Showcase = styled.div`
   flex-grow: 1;
-  background-color: ${({ theme }) => (theme === "light" ? "#ddd" : "#12181b")};
   color: ${({ theme }) => (theme === "light" ? "black" : "#b2becd")};
   display: flex;
-  flex-direction: column;
+  // flex-direction: column;
   // color: #b2becd;
   // padding : 2rem;
 `;
