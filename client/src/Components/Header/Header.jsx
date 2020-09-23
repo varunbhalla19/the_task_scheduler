@@ -15,7 +15,7 @@ const Header = styled.div`
 `;
 
 const Heading = styled.h2`
-  // font-family: Comfortaa;
+  font-family: Kufam;
   font-size: 2rem;
   margin: 0.25rem 0 0 6rem;
   color: ${({ theme }) => (theme === "light" ? "black" : "#b2becd")};

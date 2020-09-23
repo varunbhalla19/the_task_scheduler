@@ -10,6 +10,10 @@ const Head = styled.div`
   justify-content: space-between;
   align-items: center;
   padding: 1rem 3rem;
+
+  @media (max-width: 400px) {
+    padding: 1rem 1.5rem;
+  }
 `;
 
 const HeadContainer = styled.div`
@@ -40,9 +44,9 @@ const WeekContainer = styled.div`
   width: 80%;
   padding: 1rem 1.5rem;
 
-  @media( max-width : 600px ){
-    width : 95%;
-    padding : 1rem 0.5rem;
+  @media (max-width: 600px) {
+    width: 95%;
+    padding: 1rem 0.5rem;
   }
 
   margin: 0.5rem auto;
@@ -89,8 +93,8 @@ const Weekly = ({
       </Head>
 
       <WeekContainer theme={theme}>
-        {week.map((day) => (
-          <WeekDay key={day.toLocaleDateString()} day={day} />
+        {week.map((day, index) => (
+          <WeekDay index={index} key={day.toLocaleDateString()} day={day} />
         ))}
       </WeekContainer>
     </div>

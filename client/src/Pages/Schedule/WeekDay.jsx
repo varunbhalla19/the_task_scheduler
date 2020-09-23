@@ -14,12 +14,12 @@ const colorArray = [
   "#8e24aa",
   "#3f51b5",
   "#009688",
-  "#0091ea",
   "#4caf50",
   "#cddc39",
   "#ffa000",
   "#ef6c00",
   "#ff5722",
+  "#0091ea",
 ];
 
 const getColor = () =>
@@ -45,8 +45,8 @@ const DateP = styled.div`
   border-radius: 50%;
   // border: 1px solid black;
   border: 3px solid
-    ${({ hasTasks, isToday }) =>
-      isToday ? "transparent" : hasTasks ? getColor() : "transparent"};
+    ${({ hasTasks, isToday, index }) =>
+      isToday ? "transparent" : hasTasks ? colorArray[index] : "transparent"};
   background: ${({ isToday, theme }) =>
     isToday ? (theme === "dark" ? "#151c1e" : "#282c34") : "transparent"};
   ${({ isSelected }) => (isSelected ? " border : 3px solid #111;" : "")}
@@ -64,7 +64,7 @@ const DateH = styled.p`
   // color : #828b97;
 `;
 
-const WeekDay = ({ day, hasTasks, setWeekDay, theme, weekDay }) => {
+const WeekDay = ({ day, hasTasks, setWeekDay, theme, weekDay, index }) => {
   // console.log('day',day)
   return (
     <Day isToday={day.isToday} onClick={() => setWeekDay(day.toDateString())}>
@@ -76,6 +76,7 @@ const WeekDay = ({ day, hasTasks, setWeekDay, theme, weekDay }) => {
         theme={theme}
         hasTasks={hasTasks}
         isSelected={weekDay === day.toDateString()}
+        index={index}
       >
         <DateH
           style={{

@@ -52,7 +52,8 @@ const TitleSwitch = styled.h3`
 const ComponentSwitch = ({ mode, setMode, weekDay, length }) => (
   <div style={{ display: "flex", justifyContent: "space-around" }}>
     <TitleSwitch onClick={(ev) => setMode("T")} selected={mode === "T"}>
-      {weekDay === new Date().toDateString() ? "Today" : weekDay}
+      {weekDay === new Date().toDateString() ? "Today" : weekDay}{" "}
+      {length ? ": " + length : null}
     </TitleSwitch>
 
     <TitleSwitch onClick={(ev) => setMode("WP")} selected={mode === "WP"}>
@@ -73,6 +74,7 @@ const TaskSheet = ({ weekDay, taskList, weeklyPinned }) => {
         length={weeklyPinned.length}
         mode={mode}
         setMode={setMode}
+        length={taskList.length}
       />
 
       <TaskS>
