@@ -21,8 +21,6 @@ const addTask = (tasks, task) => {
 const deleteTask = (id, ar) => ar.filter((el) => el._id !== id);
 
 const arToTasks = (obj, ar) => {
-  // console.log("ar got => ", ar);
-
   const finalObj = ar.reduce((ob, el) => {
     el.date = new Date(el.date);
     return {
@@ -45,6 +43,8 @@ const setPinTask = (ar, id) =>
     return el;
   });
 
+const editTask = (ar, task) => ar.map((t) => (t._id === task._id ? task : t));
+
 export default (state = {}, { type, payload }) => {
   switch (type) {
     case "FETCHED_TASK":
@@ -66,6 +66,14 @@ export default (state = {}, { type, payload }) => {
         [payload.dateString]: {
           ...state[payload.dateString],
           taskList: setPinTask(state[payload.dateString].taskList, payload.id),
+        },
+      };
+    case "EDIT_TASK":
+      return {
+        ...state,
+        [payload.dateString]: {
+          ...state[payload.dateString],
+          taskList: editTask(state[payload.dateString].taskList, payload),
         },
       };
 

@@ -19,7 +19,6 @@ router.post("/", (req, res) => {
 
 router.get("/", (req, res) => {
   TaskModel.find().then((data) => {
-    // console.log("data recieved", data);
     res.status(200).send(data);
   });
 });
@@ -41,6 +40,17 @@ router.put("/pin", (req, res) => {
   TaskModel.findByIdAndUpdate(id, { pinned: !pinnedVal }, { new: true }).then(
     (data) => {
       console.log("pinned task saved ", data);
+      res.status(200).send(data);
+    }
+  );
+});
+
+router.put("/", (req, res) => {
+  const { values, id } = req.body;
+  console.log("PUT /tasks ", values, id);
+  TaskModel.findByIdAndUpdate(id, { $set: values }, { new: true }).then(
+    (data) => {
+      console.log("edited task saved ", data);
       res.status(200).send(data);
     }
   );

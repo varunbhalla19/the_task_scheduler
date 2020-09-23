@@ -13,8 +13,8 @@ const Today = ({ todayTask }) => {
   return (
     <Container>
       <TaskContainer>
-        {todayTask.map((task) => (
-          <Task key={task._id} todayShow task={task} />
+        {todayTask.map((task, index) => (
+          <Task key={task._id} index={index} todayShow task={task} />
         ))}
       </TaskContainer>
     </Container>

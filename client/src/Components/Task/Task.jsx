@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 
 import { connect } from "react-redux";
@@ -7,16 +7,18 @@ import { ReactComponent as EditSvg } from "../../Assets/Svgs/edit.svg";
 import { ReactComponent as DeleteSvg } from "../../Assets/Svgs/delete.svg";
 import { ReactComponent as MoreSvg } from "../../Assets/Svgs/more_arrow.svg";
 import { ReactComponent as PinSvg } from "../../Assets/Svgs/pushpin.svg";
+import { ReactComponent as SendSvg } from "../../Assets/Svgs/send.svg";
+import { ReactComponent as CloseSvg } from "../../Assets/Svgs/close.svg";
 
 import { deleteTaskAc } from "../../redux/action-creators/task-ac";
 import { useHistory } from "react-router-dom";
-import { setPinAc } from "../../redux/action-creators/task-ac";
+import { setPinAc, editTaskAc } from "../../redux/action-creators/task-ac";
 
 const TaskContainer = styled.div`
   width: 90%;
   padding: 1.5rem 4.5rem 1rem 1.5rem;
   text-align: left;
-  cursor: pointer;
+  // cursor: pointer;
   border-radius: 1rem;
   box-shadow: 0 2px 8px 1px rgba(0, 0, 0, 0.4);
   margin: 0.5rem auto;
@@ -36,6 +38,10 @@ const TaskContainer = styled.div`
     width: 95%;
   }
 
+  svg {
+    width: 24px;
+    height: 24px;
+  }
 `;
 
 const Descp = styled.p`
@@ -84,18 +90,67 @@ const absoluteStyle = {
   position: "absolute",
   // top: "0px",
   right: "1rem",
+  width: "24px",
+  height: "24px",
 };
 
-const Tasks = ({ task, todayShow, deleteTask, setPin, theme }) => {
-  const history = useHistory();
+const Input = styled.input`
+  background: rgba(255, 255, 255, 0.1);
+  padding: 0.3rem 0.5rem;
+  outline: none;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  border-radius: 0.5rem;
+  color: #b2becd;
+  width: 90%;
+  font-size: ${({ descp }) => (descp ? "0.8rem" : "1rem")};
+  margin: 0.5rem 0;
+`;
+
+// const initValues = {
+//   task: "",
+//   descp: "",
+// };
+// date: "",
+// dateString: new Date().toLocaleDateString("fr-CA"),
+// color: "transparent",
+// const history = useHistory();
+
+const Tasks = ({ task, todayShow, deleteTask, setPin, theme, editTask }) => {
+  const [values, setValues] = useState({ task: task.task, descp: task.descp });
+
+  const [editMode, setEditMode] = useState(false);
 
   return (
     <>
       <TaskContainer
         color={theme === "light" ? task.color : colors[task.color]}
       >
-        <TaskTitle>{task.task}</TaskTitle>
-        <Descp theme={theme}> {task.descp} </Descp>
+        {editMode ? (
+          <Input
+            name="task"
+            value={values.task}
+            onChange={({ target }) => {
+              setValues({ ...values, [target.name]: target.value });
+            }}
+            type="text"
+          />
+        ) : (
+          <TaskTitle>{task.task}</TaskTitle>
+        )}
+
+        {editMode ? (
+          <Input
+            name="descp"
+            value={values.descp}
+            descp
+            onChange={({ target }) => {
+              setValues({ ...values, [target.name]: target.value });
+            }}
+            type="text"
+          />
+        ) : (
+          <Descp theme={theme}> {task.descp} </Descp>
+        )}
 
         <DateString theme={theme}>
           {todayShow
@@ -105,59 +160,72 @@ const Tasks = ({ task, todayShow, deleteTask, setPin, theme }) => {
                 month: "short",
               })}
         </DateString>
-
-        {!task.isProject ? (
-          <>
-            <EditSvg
-              // onClick={() => setComponent(<TaskModal task={task} />)}
-              style={{
-                ...absoluteStyle,
-                bottom: "1rem",
-                right: "3rem",
-                fill: "slateblue",
-              }}
-            />
-            <DeleteSvg
-              onClick={() => deleteTask(task._id, task.dateString)}
-              style={{
-                ...absoluteStyle,
-                bottom: "1rem",
-                fill: "indianred",
-              }}
-            />
-
-            <PinSvg
-              style={{
-                ...absoluteStyle,
-                width: "24px",
-                height: "24px",
-                top: "1rem",
-                fill: task.pinned
-                  ? theme === "light"
-                    ? "#333333"
-                    : "#777777"
-                  : "none",
-                stroke: !task.pinned
-                  ? theme === "light"
-                    ? "#333333"
-                    : "#777777"
-                  : "none",
-                strokeWidth: !task.pinned ? "1rem" : "none",
-              }}
-              onClick={(ev) => setPin(task.pinned, task._id)}
-            />
-          </>
-        ) : (
-          <MoreSvg
-            onClick={(ev) => history.push(`/groups/${task.link}`)}
+        {editMode ? (
+          <SendSvg
+            onClick={() => {
+              editTask(task._id, { ...task, ...values });
+              setEditMode(false);
+            }}
             style={{
               ...absoluteStyle,
-              top: "50%",
-              fill: "indianred",
-              width: "3rem",
-              height: "3rem",
-              transform: "translate(0,-50%)",
+              bottom: "1rem",
+              right: "3rem",
+              fill: "green",
             }}
+          />
+        ) : (
+          <EditSvg
+            onClick={() => setEditMode(!editMode)}
+            style={{
+              ...absoluteStyle,
+              bottom: "1rem",
+              right: "3rem",
+              fill: "slateblue",
+            }}
+          />
+        )}
+
+        <DeleteSvg
+          onClick={() => deleteTask(task._id, task.dateString)}
+          style={{
+            ...absoluteStyle,
+            bottom: "1rem",
+            fill: "indianred",
+          }}
+        />
+
+        {editMode ? (
+          <CloseSvg
+            onClick={(ev) => {
+              setEditMode(false);
+              setValues({ task: task.task, descp: task.descp });
+            }}
+            style={{
+              ...absoluteStyle,
+              fill: "orangered",
+              top: "1rem",
+              height: "30px",
+              width: "30px",
+            }}
+          />
+        ) : (
+          <PinSvg
+            style={{
+              ...absoluteStyle,
+              top: "1rem",
+              fill: task.pinned
+                ? theme === "light"
+                  ? "#333333"
+                  : "#777777"
+                : "none",
+              stroke: !task.pinned
+                ? theme === "light"
+                  ? "#333333"
+                  : "#777777"
+                : "none",
+              strokeWidth: !task.pinned ? "1rem" : "none",
+            }}
+            onClick={(ev) => setPin(task.pinned, task._id)}
           />
         )}
       </TaskContainer>
@@ -170,5 +238,6 @@ export default connect(
   (dispatch) => ({
     deleteTask: (id, dateString) => dispatch(deleteTaskAc(id, dateString)),
     setPin: (pinnedVal, id) => dispatch(setPinAc(id, pinnedVal)),
+    editTask: (id, task) => dispatch(editTaskAc(id, task)),
   })
 )(Tasks);

@@ -60,4 +60,21 @@ const setPinAc = (id, pinnedVal) => (dispatch) => {
     });
 };
 
-export { addTaskAc, fetchTaskAc, deleteTaskAc, setPinAc };
+const editTaskAc = (id, values) => (dispatch) => {
+  console.log("edit task ac", id, values);
+  fetch("/tasks", {
+    method: "PUT",
+    headers: {
+      "content-type": "application/json",
+    },
+    body: JSON.stringify({ id, values }),
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      console.log("new Edited Task ", data);
+      data.date = new Date(data.date);
+      dispatch({ type: "EDIT_TASK", payload: data });
+    });
+};
+
+export { addTaskAc, fetchTaskAc, deleteTaskAc, setPinAc, editTaskAc };

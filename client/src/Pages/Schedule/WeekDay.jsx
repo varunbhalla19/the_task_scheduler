@@ -28,13 +28,14 @@ const getColor = () =>
 const Day = styled.div`
   cursor: pointer;
   margin: 0 0.5rem;
-
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  // border-radius: 50%;
 `;
+// border-radius: 4rem;
+// border: 2px solid black;
+// padding: 0.5rem;
 
 const DateP = styled.div`
   width: 36px;
@@ -49,7 +50,7 @@ const DateP = styled.div`
       isToday ? "transparent" : hasTasks ? colorArray[index] : "transparent"};
   background: ${({ isToday, theme }) =>
     isToday ? (theme === "dark" ? "#151c1e" : "#282c34") : "transparent"};
-  ${({ isSelected }) => (isSelected ? " border : 3px solid #111;" : "")}
+  ${({ isSelected }) => (isSelected ? " border : 3px solid #111;  " : "")}
 
   @media( max-width : 450px ) {
     font-size: 12px;
@@ -60,8 +61,6 @@ const DateP = styled.div`
 
 const DateH = styled.p`
   color: black;
-
-  // color : #828b97;
 `;
 
 const WeekDay = ({ day, hasTasks, setWeekDay, theme, weekDay, index }) => {
