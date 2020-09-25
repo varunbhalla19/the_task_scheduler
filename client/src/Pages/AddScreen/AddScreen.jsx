@@ -66,7 +66,7 @@ const colors = {
 
 const changeInp = (name, value, values) => ({ ...values, [name]: value });
 
-export const AddScreen = ({ theme, addTask, values, setValues }) => {
+export const AddScreen = ({ theme, addTask, values, setValues, resetForm }) => {
   const changeVal = ({ name, value }) =>
     setValues(changeInp(name, value, values));
 
@@ -89,7 +89,7 @@ export const AddScreen = ({ theme, addTask, values, setValues }) => {
           values["dateString"] = theDate.toDateString();
           console.log(values);
           addTask({ ...values, pinned: false });
-          // resetform();
+          resetForm();
         }}
       >
         <InpCover>

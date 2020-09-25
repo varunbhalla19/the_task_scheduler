@@ -18,7 +18,16 @@ const initValues = {
 export const Add_Task = ({ addTask }) => {
   const [values, setValues] = useState(initValues);
 
-  return <AddScreen values={values} setValues={setValues} addTask={addTask} />;
+  const resetForm = () => setValues({ ...values, ...initValues });
+
+  return (
+    <AddScreen
+      values={values}
+      setValues={setValues}
+      resetForm={resetForm}
+      addTask={addTask}
+    />
+  );
 };
 
 export default connect(null, (dispatch) => ({
